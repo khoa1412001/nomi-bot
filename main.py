@@ -35,7 +35,7 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
-  guild, channel, sender, msg = message.guild, message.channel, message.author, message. content
+  guild, channel, sender, msg=message.guild, message.channel, message.author, message. content
   if sender.id!=bot.user.id:
     if len(message.mentions)==1 and bot.user.mentioned_in(message):
       async with channel.typing():
@@ -43,7 +43,7 @@ async def on_message(message):
         #rely=utils.to_emoji(logic.req_to_res(msg))
         await asyncio.sleep(delay_time)
         #await channel.send(f'{sender.mention} {rely}')
-    if channel.id!=utils.config['log_channel_id']:
+    if channel.id!=utils.objects['log_channel_id']:
       await log(f'[{guild.name}][{channel.name}]{sender.name}\n{msg}')
   if msg.startswith(prefix_char):
     await bot.process_commands(message)
