@@ -2,8 +2,6 @@ import os,datetime,random,asyncio
 import discord,utils
 from discord.ext import commands as cmds
 
-startup_extensions=["utils"]
-token=os.getenv('token')
 prefix_char=utils.get_object('prefix_char')
 bot=cmds.Bot(command_prefix=prefix_char)
 bot.remove_command('help')
@@ -14,7 +12,6 @@ async def init_activity():
 
 async def log(content,use_time=True):
   print(content)
-  print(utils.objects)
   channel=utils.get_object('log_channel')
   if channel==None:
     print('Error: Not found log channel.')
@@ -27,6 +24,7 @@ async def log(content,use_time=True):
 @bot.event
 async def on_ready():
   await init_activity()
+  utils.set_object('log_channel', bot.get_channel(utils.get_object('log_channel_id')))
   msg=(
     '```'
     f'version: {str(datetime.datetime.now())}\n'
@@ -49,13 +47,5 @@ async def on_message(message):
       await log(f'[{guild.name}][{channel.name}]{sender.name}\n{msg}')
   if msg.startswith(prefix_char):
     await bot.process_commands(message)
-
-for extension in startup_extensions:
-  try:
-    bot.load_extension(extension)
-    print(f'Successful loaded extension: {extension}')
-  except Exception as e:
-    exc = f'{type(e).__name__}: {e}'
-    print(f'Error: Failed to load extension: {extension}\n{exc}.')
     
-bot.run(token)
+bot.run(os.getenv('token'))
