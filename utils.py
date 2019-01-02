@@ -2,14 +2,6 @@ import discord
 from discord.ext import commands
 
 objects={}
-
-class Utils():
-  def __init__(self, bot):
-    self.bot = bot
-  
-  @self.bot.event
-  async def on_ready():
-    set_object('log_channel', bot.get_channel(get_object('log_channel_id')))
     
 def get_object(key):
   return objects[key]
@@ -55,7 +47,4 @@ def read_objects(file_name):
   global objects
   objects=dic
 
-def setup(bot):
-    bot.add_cog(Utils(bot))
-    
 read_objects('data/objects.nomi')
