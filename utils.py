@@ -8,7 +8,7 @@ class Utils():
     self.bot = bot
     set_object('log_channel', bot.get_channel(get_object('log_channel_id')))
     
-def get_object(self,key):
+def get_object(key):
   return objects[key]
 
 def set_object(key,value):
