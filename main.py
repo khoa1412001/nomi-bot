@@ -44,7 +44,7 @@ async def on_message(message):
         await asyncio.sleep(delay_time)
         #await channel.send(f'{sender.mention} {rely}')
     if channel.id!=utils.objects['log_channel_id']:
-      await log(f'[{guild.name.upper()}][#{channel.name}]{sender.name}#{sender.discriminator}\n{msg}')
+      await log(f'[{guild.name}][#{channel.name}]{sender.name}#{sender.discriminator}\n{msg}')
   if msg.startswith(prefix_char):
     await bot.process_commands(message)
     
