@@ -17,7 +17,7 @@ async def log(content,use_time=True):
     print('Error: Not found log channel.')
     return
   if use_time:
-    await channel.send(f'[{str(datetime.datetime.now())}]\n{message}')
+    await channel.send(f'[{str(datetime.datetime.now())}]\n{content}')
   else:
     await channel.send(content)
 
