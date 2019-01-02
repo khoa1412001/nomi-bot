@@ -7,7 +7,7 @@ class Utils():
   def __init__(self, bot):
     self.bot = bot
   
-  @bot.event
+  @self.bot.event
   async def on_ready():
     set_object('log_channel', bot.get_channel(get_object('log_channel_id')))
     
