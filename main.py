@@ -1,4 +1,5 @@
-import os
+import os,datetime,random,asyncio
+import discord
 from discord.ext import commands as cmds
 
 token=os.getenv('token')
