@@ -1,3 +1,4 @@
+import os
 from discord.ext import commands as cmds
 
 token=os.getenv('token')
