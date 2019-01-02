@@ -6,29 +6,24 @@ token=os.getenv('token')
 prefix_char='#'
 bot=cmds.Bot(command_prefix=prefix_char)
 bot.remove_command('help')
-
-def init_variables():
-  pass
-  #utils.variables['log_channel']=bot.get_channel(utils.variables['log_channel_id'])
     
 async def init_activity():
   activity=discord.Activity(name='NTR hentai.',type=discord.ActivityType.watching)
   await bot.change_presence(activity=activity)
 
 async def log(content,use_time=True):
-  print(content)
-  channel=None
+  channel=utils.get_object('log_channel')
   if channel==None:
     print('Error: Not found log channel.')
     return
- #if use_time:
-   #await channel.send(f'[{str(datetime.datetime.now())}]\n{message}')
- #else:
-   #await channel.send(content)
+  if use_time:
+    await channel.send(f'[{str(datetime.datetime.now())}]\n{message}')
+  else:
+    await channel.send(content)
 
 @bot.event
 async def on_ready():
-  #init_variables()
+  utils.set_object('log_channel'. bot.get_channel(utils.get_object('log_channel_id')))
   await init_activity()
   msg=(
     '```'
