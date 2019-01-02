@@ -1,5 +1,5 @@
 import os,datetime,random,asyncio
-import discord
+import discord,utils
 from discord.ext import commands as cmds
 
 token=os.getenv('token')
@@ -12,6 +12,7 @@ async def init_activity():
   await bot.change_presence(activity=activity)
 
 async def log(content,use_time=True):
+  print(content)
   channel=utils.get_object('log_channel')
   if channel==None:
     print('Error: Not found log channel.')
@@ -23,7 +24,7 @@ async def log(content,use_time=True):
 
 @bot.event
 async def on_ready():
-  utils.set_object('log_channel'. bot.get_channel(utils.get_object('log_channel_id')))
+  utils.set_object('log_channel',bot.get_channel(utils.get_object('log_channel_id')))
   await init_activity()
   msg=(
     '```'
