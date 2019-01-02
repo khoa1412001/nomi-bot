@@ -2,8 +2,9 @@ import os,datetime,random,asyncio
 import discord,utils
 from discord.ext import commands as cmds
 
+startup_extensions = ["utils"]
 token=os.getenv('token')
-prefix_char='#'
+prefix_char=utils.get_object('prefix_char')
 bot=cmds.Bot(command_prefix=prefix_char)
 bot.remove_command('help')
     
@@ -24,7 +25,6 @@ async def log(content,use_time=True):
 
 @bot.event
 async def on_ready():
-  utils.set_object('log_channel',bot.get_channel(utils.get_object('log_channel_id')))
   await init_activity()
   msg=(
     '```'
@@ -49,4 +49,11 @@ async def on_message(message):
   if msg.startswith(prefix_char):
     await bot.process_commands(message)
 
+for extension in startup_extensions:
+  try:
+    bot.load_extension(extension)
+  except Exception as e:
+    exc = f'{type(e).__name__}: {e}'
+    print(f'Error: Failed to load extension: {extension}\n{exc}.')
+    
 bot.run(token)
