@@ -1,0 +1,7 @@
+str::prefix_char::#
+===
+str::bright_colors::FF0080 FF8000 FFFF00 80FF00 00FF00 00FF80 00FFFF 0080FF 0000FF 8000FF FF00FF FF0080
+===
+str::invite_url::https://discordapp.com/oauth2/authorize?client_id=529774662071222272&permissions=8&scope=bot
+===
+int::log_channel_id::529865978973126669
