@@ -6,7 +6,10 @@ objects={}
 class Utils():
   def __init__(self, bot):
     self.bot = bot
-    utils.set_object('log_channel', bot.get_channel(utils.get_object('log_channel_id')))
+  
+  @bot.event
+  async def on_ready():
+    set_object('log_channel', bot.get_channel(get_object('log_channel_id')))
     
 def get_object(key):
   return objects[key]
