@@ -2,7 +2,7 @@ import os,datetime,random,asyncio
 import discord,utils
 from discord.ext import commands as cmds
 
-startup_extensions = ["utils"]
+startup_extensions=["utils"]
 token=os.getenv('token')
 prefix_char=utils.get_object('prefix_char')
 bot=cmds.Bot(command_prefix=prefix_char)
@@ -14,6 +14,7 @@ async def init_activity():
 
 async def log(content,use_time=True):
   print(content)
+  print(utils.objects)
   channel=utils.get_object('log_channel')
   if channel==None:
     print('Error: Not found log channel.')
@@ -52,6 +53,7 @@ async def on_message(message):
 for extension in startup_extensions:
   try:
     bot.load_extension(extension)
+    print(f'Successful loaded extension: {extension}')
   except Exception as e:
     exc = f'{type(e).__name__}: {e}'
     print(f'Error: Failed to load extension: {extension}\n{exc}.')
