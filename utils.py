@@ -43,5 +43,5 @@ def read_objects(file_name):
                 dic[key]=None
     global objects
     objects=dic
-    
- read_objects('data/objects.nomi')
+  
+read_objects('data/objects.nomi')
