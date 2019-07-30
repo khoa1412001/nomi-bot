@@ -2,7 +2,7 @@ from discord.ext import commands
 import platform, discord, datetime, pytz, random, asyncio
 from modules import talking_nomi
 
-class Umbra(commands.Cog):
+class Nomi_Host_Data(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
     self.use_channels = {}
@@ -57,4 +57,4 @@ class Umbra(commands.Cog):
 
 
 def setup(bot):
-  bot.add_cog(Umbra(bot))
+  bot.add_cog(Nomi_Host_Data(bot))
