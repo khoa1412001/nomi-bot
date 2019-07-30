@@ -34,7 +34,7 @@ class Umbra(commands.Cog):
     if (message.author.id != self.bot.user.id):
       if (len(message.mentions) == 1) and (self.bot.user.mentioned_in(message)):
         async with message.channel.typing():
-          delay_time = random.choice(range(30, 60)) / 100.0
+          delay_time = random.choice(range(10, 30)) / 100.0
           await asyncio.sleep(delay_time)
           rely = talking_nomi.parse_sentence(message.content)
           if (rely == 'not found response'):
