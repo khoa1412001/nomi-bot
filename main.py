@@ -1,13 +1,13 @@
 from discord.ext import commands
 import discord
 import logging
+import os
 
-token = 'NTI5Nzc0NjYyMDcxMjIyMjcy.XT3Chg.w-vPKWvpXTIW4XTMwLGyPnzXlcY'
+token = os.getenv('token')
 prefix_char = '#'
 bot = commands.Bot(
   command_prefix = prefix_char
 )
-log = {}
 
 def init_log():
   logger = logging.getLogger('discord')
