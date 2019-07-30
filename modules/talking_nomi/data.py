@@ -1,7 +1,7 @@
 from modules import talking_nomi
 
 def read_requests():
-  f = open(r'modules\talking_nomi\data\requests.nomi', 'r')
+  f = open('modules/talking_nomi/data/requests.nomi', 'r')
   lines = f.readlines()
   f.close()
   for line in lines:
@@ -11,7 +11,7 @@ def read_requests():
     talking_nomi.all_reqs[key] = value
 
 def read_response():
-  f = open(r'modules\talking_nomi\data\responses.nomi', 'r')
+  f = open('modules/talking_nomi/data/responses.nomi', 'r')
   lines = f.readlines()
   f.close()
   for line in lines:
@@ -21,7 +21,7 @@ def read_response():
     talking_nomi.all_ress[key] = value
 
 def read_request_to_response():
-  f = open(r'modules\talking_nomi\data\request_to_response.nomi', 'r')
+  f = open('modules/talking_nomi/data/request_to_response.nomi', 'r')
   lines = f.readlines()
   f.close()
   for line in lines:
