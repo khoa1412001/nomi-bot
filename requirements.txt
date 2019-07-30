@@ -1,0 +1,3 @@
+discord.py[voice]
+pytz
+beautifulsoup4
