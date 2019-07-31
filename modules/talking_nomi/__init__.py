@@ -29,13 +29,13 @@ def before_parse():
     response = ''
 
 def parse_counts():
-    max = 0
+    max1 = 0
     for key in counts:
-        if counts[key] > temp_max:
-            max = counts[key]
+        if counts[key] > max1:
+            max1 = counts[key]
     request_keys = []
     for key in counts:
-        if counts[key] == temp_max:
+        if counts[key] == max1:
             request_keys.append(key)
     global response
     if len(request_keys) > 0:
