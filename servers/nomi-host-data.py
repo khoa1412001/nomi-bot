@@ -1,5 +1,5 @@
 from discord.ext import commands
-import platform, discord, datetime, pytz, random
+import platform, discord, datetime, pytz, random, asyncio
 from modules import talking_nomi
 
 class Nomi_Host_Data(commands.Cog):
@@ -34,17 +34,18 @@ class Nomi_Host_Data(commands.Cog):
     if (message.author.id != self.bot.user.id):
       if (len(message.mentions) == 1) and (self.bot.user.mentioned_in(message)):
         async with message.channel.typing():
-          rely = talking_nomi.parse_sentence(message.content)
-          if (rely == 'not found response'):
-            req, res, cou = talking_nomi.return_error()
-            str = (
-              '```[ERROR]```'
-              f'request: {req}\n'
-              f'count:\n {cou}\n'
-            )
-            await self.use_channels['no-response'].send(str)
-          else:
-            await message.channel.send(f'{message.author.mention} {rely}')
+          await asyncio.sleep(10)
+        rely = talking_nomi.parse_sentence(message.content)
+        if (rely == 'not found response'):
+          req, res, cou = talking_nomi.return_error()
+          str = (
+            '```[ERROR]```'
+            f'request: {req}\n'
+            f'count:\n {cou}\n'
+          )
+          await self.use_channels['no-response'].send(str)
+        else:
+          await message.channel.send(f'{message.author.mention} {rely}')
       if 'messages' in self.use_channels:
         str = (
           '```[MESSAGE]```'
