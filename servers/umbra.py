@@ -25,11 +25,11 @@ class Umbra(commands.Cog):
     while (True):
       now = datetime.datetime.now(pytz.timezone('Asia/Ho_Chi_Minh'))
       if (now.hour in [17] and now.minute in [55]):
-        str = f'{self.use_roles["Member"].mention}, it is Urus time boiz, go go go  .'
+        str = f'{self.use_roles["Member"].mention}, Urus in next 5 minutes.'
         await self.use_channels['kms-update'].send(str)
         await asyncio.sleep(60)
       elif (now.hour in [9, 16, 18] and now.minute in [55]):
-        str = f'{self.use_roles["Member"].mention}, it is Flag Race time boiz, go go go.'
+        str = f'{self.use_roles["Member"].mention}, Flag Race in next 5 minutes '
         await self.use_channels['kms-update'].send(str)
         await asyncio.sleep(60)
       else:
