@@ -57,7 +57,7 @@ def count(key, point):
     counts[key] += point
     
 def parse_word(word):
-    if word[-1] in [',','.','?','!',';',':',,'"','\'']:
+    if word[-1] in [',','.','?','!',';',':','"','\'']:
         word = word[:-1]
     for req_key in all_reqs:
         req_data = all_reqs[req_key]
