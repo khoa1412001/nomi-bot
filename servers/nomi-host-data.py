@@ -21,11 +21,13 @@ class Nomi_Host_Data(commands.Cog):
     self.find_channels()
     now = datetime.datetime.now(pytz.timezone('Asia/Ho_Chi_Minh')).strftime("%Y-%m-%d %H:%M:%S")
     str = (
+      '```'
       '[INFO]\n'
       f'Logged as: {self.bot.user.name}#{self.bot.user.discriminator}\n'
       f'Python: {platform.python_version()}\n'
       f'Discord py: {discord.__version__}\n'
       f'Built date: {now}\n'
+      '```'
     )
     await self.use_channels['logs'].send(str)
 
@@ -49,8 +51,10 @@ class Nomi_Host_Data(commands.Cog):
             await message.channel.send(f'{message.author.mention} {rely}')
       if 'messages' in self.use_channels:
         str = (
+          '```'
           '[MESSAGE]\n'
           f'[{message.guild}][#{message.channel}]\n'
+          '```'
           f'{message.author}: {message.content}\n'
         )
         await self.use_channels['messages'].send(str)
