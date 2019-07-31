@@ -9,15 +9,15 @@ all_ress = {}
 req_to_res = {}
 all_similars = {}
 
-def fix_request(str):
-    words = str.split()
+def fix_request(text):
+    words = text.split()
     mention = ''
     for word in words:
         if (word.startswith('<@')):
             mention = word
             break
-    str = str.replace(mention, '')
-    return ' '.join(str.split())
+    text = text.replace(mention, '')
+    return ' '.join(text.split())
 
 def return_error():
     global request, response, counts
