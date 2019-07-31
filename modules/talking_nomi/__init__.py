@@ -16,7 +16,8 @@ def fix_request(str):
         if (word.startswith('<@')):
             mention = word
             break
-    return str.replace(mention, '')
+    str = str.replace(mention, '')
+    return ' '.join(str.split())
 
 def return_error():
     global request, response, counts
@@ -60,13 +61,12 @@ def parse_word(word):
         req_data = all_reqs[req_key]
         if word in req_data:
             count(req_key, 1.0)
-            continue
-        if word in all_similars:
-            similar_words = all_similars[word]
-            for similar_word in similar_words:
-                if similar_word in req_data:
-                    count(req_key, 0.8)
-                    continue
+        else:
+            if word in all_similars:
+                similar_words = all_similars[word]
+                for similar_word in similar_words:
+                    if similar_word in req_data:
+                        count(req_key, 0.8)
 
 def parse_sentence(sentence):
     global request
