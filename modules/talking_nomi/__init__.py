@@ -32,7 +32,7 @@ def parse_counts():
     max = 0
     for key in counts:
         if counts[key] > temp_max:
-            temp_max = counts[key]
+            max = counts[key]
     request_keys = []
     for key in counts:
         if counts[key] == temp_max:
