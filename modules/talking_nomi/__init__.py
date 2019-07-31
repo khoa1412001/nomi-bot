@@ -1,7 +1,7 @@
 #same word
 #same meaning
 
-from modules.talking_nomi import data
+from modules.talking_nomi import external_resource
 import random
 
 all_reqs = {}
@@ -69,6 +69,6 @@ def parse_sentence(sentence):
         response = 'wut?'
     return response
 
-data.read_requests()
-data.read_response()
-data.read_request_to_response()
+external_resource.read_requests()
+external_resource.read_response()
+external_resource.read_request_to_response()
