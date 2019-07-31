@@ -7,6 +7,7 @@ import random
 all_reqs = {}
 all_ress = {}
 req_to_res = {}
+all_similars = {}
 
 def fix_request(str):
     words = str.split()
@@ -28,7 +29,7 @@ def before_parse():
     response = ''
 
 def parse_counts():
-    temp_max = 0
+    max = 0
     for key in counts:
         if counts[key] > temp_max:
             temp_max = counts[key]
@@ -43,18 +44,26 @@ def parse_counts():
     else:
         response = 'not found response'
 
-def count(key):
+def count(key, point):
     global counts
     if not key in counts:
-       counts[key] = 0
-    counts[key] += 1
+       counts[key] = 0.0
+    counts[key] += point
     
 def parse_word(word):
     for req_key in all_reqs:
         req_data = all_reqs[req_key]
         if word in req_data:
-            count(req_key)
-    
+            count(req_key, 1.0)
+            continue
+        if word in all_similars:
+            similar_words = all_similars[word]
+            for similar_word in similar_words:
+                if similar_word in req_data:
+                    count(req_key, 0.8)
+                    continue
+
+
 def parse_sentence(sentence):
     global request
     request = sentence
@@ -72,3 +81,4 @@ def parse_sentence(sentence):
 external_resource.read_requests()
 external_resource.read_response()
 external_resource.read_request_to_response()
+external_resource.read_similars()
