@@ -29,17 +29,22 @@ def before_parse():
     response = ''
 
 def parse_counts():
-    max1 = 0
     for key in counts:
-        if counts[key] > max1:
-            max1 = counts[key]
-    request_keys = []
+        value = counts[key] / len(all_reqs[key])
+        counts[key] = round(value, 4)
+    max_count = 0
     for key in counts:
-        if counts[key] == max1:
-            request_keys.append(key)
-    global response
-    if len(request_keys) > 0:
-        response_keys = req_to_res[random.choice(request_keys)]
+        if counts[key] > max_count:
+            max_count = counts[key]
+    keys = []
+    for key in counts:
+        if counts[key] == max_count:
+            keys.append(key)
+    global request, response
+    if request == '':
+        response = random.choice(['What?', 'Wut?', 'Nani?', 'Hello?', 'nAni dEsu kA?'])
+    elif len(keys) > 0:
+        response_keys = req_to_res[random.choice(keys)]
         response = random.choice(all_ress[random.choice(response_keys)])
     else:
         response = 'not found response'
@@ -62,7 +67,6 @@ def parse_word(word):
                 if similar_word in req_data:
                     count(req_key, 0.8)
                     continue
-
 
 def parse_sentence(sentence):
     global request
