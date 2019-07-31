@@ -5,6 +5,7 @@ def read_requests():
   lines = f.readlines()
   f.close()
   for line in lines:
+    line = line[:-1]
     str_split = line.split('::')
     key = str_split[0]
     value = str_split[1].split('||')
@@ -15,6 +16,7 @@ def read_response():
   lines = f.readlines()
   f.close()
   for line in lines:
+    line = line[:-1]
     str_split = line.split('::')
     key = str_split[0]
     value = str_split[1].split('||')
@@ -25,6 +27,7 @@ def read_request_to_response():
   lines = f.readlines()
   f.close()
   for line in lines:
+    line = line[:-1]
     str_split = line.split('::')
     key = str_split[0]
     value = str_split[1].split('||')
@@ -35,6 +38,7 @@ def read_similars():
   lines = f.readlines()
   f.close()
   for line in lines:
+    line = line[:-1]
     str_split = line.split('::')
     key = str_split[0]
     value = str_split[1].split('||')
