@@ -21,7 +21,7 @@ class Nomi_Host_Data(commands.Cog):
     self.find_channels()
     now = datetime.datetime.now(pytz.timezone('Asia/Ho_Chi_Minh')).strftime("%Y-%m-%d %H:%M:%S")
     str = (
-      '```[INFO]```\n'
+      '```[INFO]```'
       f'Logged as: {self.bot.user.name}#{self.bot.user.discriminator}\n'
       f'Python: {platform.python_version()}\n'
       f'Discord py: {discord.__version__}\n'
@@ -40,7 +40,7 @@ class Nomi_Host_Data(commands.Cog):
           if (rely == 'not found response'):
             req, res, cou = talking_nomi.return_error()
             str = (
-              '[ERROR]\n'
+              '```[ERROR]```'
               f'request: {req}\n'
               f'count:\n {cou}\n'
             )
@@ -49,7 +49,7 @@ class Nomi_Host_Data(commands.Cog):
             await message.channel.send(f'{message.author.mention} {rely}')
       if 'messages' in self.use_channels:
         str = (
-          '```[MESSAGE]```\n'
+          '```[MESSAGE]```'
           f'[{message.guild}][#{message.channel}]\n'
           f'{message.author}: {message.content}\n'
         )
