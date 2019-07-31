@@ -57,6 +57,8 @@ def count(key, point):
     counts[key] += point
     
 def parse_word(word):
+    if word[-1] in [',','.','?','!',';',':',,'"','\'']:
+        word = word[:-1]
     for req_key in all_reqs:
         req_data = all_reqs[req_key]
         if word in req_data:
@@ -72,14 +74,11 @@ def parse_sentence(sentence):
     global request
     request = sentence
     before_parse()
-    if (request != ''):
-        words = request.lower().split()
-        for word in words:
-            parse_word(word)
-        parse_counts()
-    else:
-        global response
-        response = 'wut?'
+    words = request.lower().split()
+    for word in words:
+        parse_word(word)
+    parse_counts()
+    global response
     return response
 
 external_resource.read_requests()
