@@ -87,6 +87,7 @@ class Umbra(commands.Cog):
     loop = asyncio.get_event_loop()
     loop.create_task(self.daily_time_handle())
     #loop.create_task(self.kms_update())
+    loop.create_task(self.send_packs())
 
 
 def setup(bot):
