@@ -76,11 +76,15 @@ class Umbra(commands.Cog):
   async def send_packs(self):
     await self.bot.wait_until_ready()
     while (True):
-      url = nomi_water_pack.hasunoai.get_random()
+      image_url = nomi_water_pack.hasunoai.get_random()
       embed = discord.Embed()
-      embed.set_image(url = url)
+      embed.set_image(url = image_url)
       await self.use_channels['cosplay'].send(embed = embed)
-      await asyncio.sleep(10)
+      image_url = nomi_water_pack.hanime.get_random()
+      embed = discord.Embed()
+      embed.set_image(url = image_url)
+      await self.use_channels['qpu-nsfw'].send(embed = embed)
+      await asyncio.sleep(30)
 
   @commands.Cog.listener()
   async def on_ready(self):
