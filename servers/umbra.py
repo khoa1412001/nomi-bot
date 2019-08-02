@@ -74,7 +74,7 @@ class Umbra(commands.Cog):
 
   async def send_packs(self):
     await self.bot.wait_until_ready()
-    while (true):
+    while (True):
       url = nomi_water_pack.hasunoai.get_random()
       embed = discord.Embed()
       embed.set_image(image_url = url)
