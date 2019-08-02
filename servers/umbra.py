@@ -29,7 +29,7 @@ class Umbra(commands.Cog):
         await self.use_channels['kms-update'].send(str)
         await asyncio.sleep(60)
       elif (now.hour in [9, 16, 18] and now.minute in [55]):
-        str = f'{self.use_roles["Member"].mention}, Flag Race in next 5 minutes '
+        str = f'{self.use_roles["Member"].mention}, Flag Race in next 5 minutes.'
         await self.use_channels['kms-update'].send(str)
         await asyncio.sleep(60)
       else:
@@ -71,6 +71,15 @@ class Umbra(commands.Cog):
         await self.use_channels['kms-update'].send(embed = embed)
       loop1800 = random.choice(range(10, 16)) + 1
       await asyncio.sleep(1800 * loop1800)
+
+  async def send_packs(self):
+    await self.bot.wait_until_ready()
+    while (true):
+      url = nomi_water_pack.hasunoai.get_random()
+      embed = discord.Embed()
+      embed.set_image(image_url = url)
+      await self.use_channels['cosplay'].send(embed = embed)
+      await asyncio.sleep(10)
 
   @commands.Cog.listener()
   async def on_ready(self):
