@@ -78,7 +78,7 @@ class Umbra(commands.Cog):
     while (True):
       url = nomi_water_pack.hasunoai.get_random()
       embed = discord.Embed()
-      embed.set_image(image_url = url)
+      embed.set_image(url = url)
       await self.use_channels['cosplay'].send(embed = embed)
       await asyncio.sleep(10)
 
