@@ -3,7 +3,7 @@ import random
 urls = []
 
 def load():
-    f = open('resources/hanime_pack.nomi', 'r')
+    f = open('modules/nomi_water_pack/resources/hanime_pack.nomi', 'r')
     lines = f.readlines()
     f.close()
     global urls
