@@ -84,7 +84,7 @@ class Umbra(commands.Cog):
       embed = discord.Embed()
       embed.set_image(url = image_url)
       await self.use_channels['qbu-nsfw'].send(embed = embed)
-      await asyncio.sleep(120)
+      await asyncio.sleep(300)
 
   @commands.Cog.listener()
   async def on_ready(self):
