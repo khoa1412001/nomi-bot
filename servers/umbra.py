@@ -83,7 +83,7 @@ class Umbra(commands.Cog):
       image_url = nomi_water_pack.hanime.get_random()
       embed = discord.Embed()
       embed.set_image(url = image_url)
-      await self.use_channels['qpu-nsfw'].send(embed = embed)
+      await self.use_channels['qbu-nsfw'].send(embed = embed)
       await asyncio.sleep(30)
 
   @commands.Cog.listener()
