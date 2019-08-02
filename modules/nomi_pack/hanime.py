@@ -11,7 +11,7 @@ def load():
         url = line[:-1]
         urls.append(url)
 
-def get_one():
+def get_random():
     global urls
     return random.choice(urls)
 
