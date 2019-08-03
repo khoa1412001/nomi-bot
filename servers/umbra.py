@@ -80,11 +80,24 @@ class Umbra(commands.Cog):
       embed = discord.Embed()
       embed.set_image(url = image_url)
       await self.use_channels['cosplay'].send(embed = embed)
+
       image_url = nomi_water_pack.hanime.get_random()
       embed = discord.Embed()
       embed.set_image(url = image_url)
       await self.use_channels['qbu-nsfw'].send(embed = embed)
-      await asyncio.sleep(300)
+
+      image_url = nomi_water_pack.ulzzang_face.get_random()
+      embed = discord.Embed()
+      embed.set_image(url = image_url)
+      await self.use_channels['ulzzang'].send(embed = embed)
+
+      image_urls = [nomi_water_pack.favorite_asian_girls.get_random(), nomi_water_pack.instababes_asian.get_random()]
+      image_url = random.choice(image_urls)
+      embed = discord.Embed()
+      embed.set_image(url = image_url)
+      await self.use_channels['asian'].send(embed = embed)
+
+      await asyncio.sleep(600)
 
   @commands.Cog.listener()
   async def on_ready(self):
