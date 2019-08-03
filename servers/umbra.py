@@ -97,7 +97,7 @@ class Umbra(commands.Cog):
       embed.set_image(url = image_url)
       await self.use_channels['asian'].send(embed = embed)
 
-      await asyncio.sleep(600)
+      await asyncio.sleep(3600)
 
   @commands.Cog.listener()
   async def on_ready(self):
