@@ -28,7 +28,7 @@ class Umbra(commands.Cog):
     await self.bot.wait_until_ready()
     while (True):
       now = datetime.datetime.now(pytz.timezone('Asia/Ho_Chi_Minh'))
-      if (now.hour in [22, 12] and now.minute in [26]):
+      if (now.hour in [22, 12] and now.minute in [39]):
         print('yes')
         members = self.my_guild.members
         str = ''
@@ -36,7 +36,15 @@ class Umbra(commands.Cog):
           if (member.id not in self.last_online):
             self.last_online[member.id] = 'No information'
           str += f'{member.display_name} : {self.last_online[member.id]}\n'
-        await self.my_channels['online-status'].send(str)
+        f = open('temp.txt', 'w+')
+        f.write(str)
+        f.close()
+        f = open('temp.txt', 'rb')
+        file = discord.File(
+          fp = f,
+          filename = 'online-status.txt'
+        )
+        await self.my_channels['online-status'].send(file = file)
         await asyncio.sleep(60)
       else:
         await asyncio.sleep(30)
