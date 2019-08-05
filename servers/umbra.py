@@ -28,7 +28,7 @@ class Umbra(commands.Cog):
     await self.bot.wait_until_ready()
     while (True):
       now = datetime.datetime.now(pytz.timezone('Asia/Ho_Chi_Minh'))
-      if (now.hour in [22, 12] and now.minute in [23]):
+      if (now.hour in [22, 12] and now.minute in [26]):
         print('yes')
         members = self.my_guild.members
         str = ''
