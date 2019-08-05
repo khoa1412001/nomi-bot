@@ -5,15 +5,17 @@ from modules import talking_nomi
 class Nomi_Host_Data(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
-    self.use_channels = {}
+    self.my_guild = None
+    self.my_channels = {}
 
   def find_channels(self):
     guilds = self.bot.guilds
     for guild in guilds:
       if (guild.name == 'nomi-host-data'):
+        self.my_guild = guild
         channels = guild.channels
         for channel in channels:
-          self.use_channels[channel.name] = channel
+          self.my_channels[channel.name] = channel
         break
 
   @commands.Cog.listener()
@@ -27,7 +29,7 @@ class Nomi_Host_Data(commands.Cog):
       f'Discord py: {discord.__version__}\n'
       f'Built date: {now}\n'
     )
-    await self.use_channels['logs'].send(str)
+    await self.my_channels['logs'].send(str)
 
   @commands.Cog.listener()
   async def on_message(self, message):
@@ -44,16 +46,16 @@ class Nomi_Host_Data(commands.Cog):
             f'request: {req}\n'
             f'count:\n {cou}\n'
           )
-          await self.use_channels['no-response'].send(str)
+          await self.my_channels['no-response'].send(str)
         else:
           await message.channel.send(f'{message.author.mention} {rely}')
-      if 'messages' in self.use_channels:
+      if 'messages' in self.my_channels:
         str = (
           '```[MESSAGE]```'
           f'[{message.guild}][#{message.channel}]\n'
           f'{message.author}: {message.content}\n'
         )
-        await self.use_channels['messages'].send(str)
+        await self.my_channels['messages'].send(str)
 
 
 def setup(bot):
