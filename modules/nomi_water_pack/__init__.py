@@ -13,7 +13,7 @@ def load(name):
 
 def get_random(name):
   global packs
-  random.choice(packs[name])
+  return random.choice(packs[name])
 
 load('hasunoai')
 load('hanime')
