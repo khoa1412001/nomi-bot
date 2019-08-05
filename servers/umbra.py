@@ -31,11 +31,13 @@ class Umbra(commands.Cog):
       if (now.hour in [00, 12] and now.minute in [00]):
         members = self.my_guild.members
         str = ''
+        print(self.last_online)
         for member in members:
           if (member.id not in self.last_online):
             self.last_online[member.id] = 'No information'
           str += f'{member.display_name} : {self.last_online[member.id]}\n'
-        f = open('temp.txt', 'w+')
+        print(str)
+        f = open('temp.txt', 'w')
         f.write(str)
         f.close()
         f = open('temp.txt', 'rb')
@@ -158,7 +160,7 @@ class Umbra(commands.Cog):
   async def on_member_update(self, before, after):
     if (after.guild == self.my_guild):
       if (after.status != discord.Status.offline):
-        self.last_online[after.id] = datetime.datetime.now(pytz.timezone('Asia/Ho_Chi_Minh')).strftime("%Y-%m-%d %H:%M")
+        self.last_online[after.id] = datetime.datetime.now(pytz.timezone('Asia/Ho_Chi_Minh')).strftime("%Y-%m-%d %H:%M:%d")
 
 def setup(bot):
   bot.add_cog(Umbra(bot))
