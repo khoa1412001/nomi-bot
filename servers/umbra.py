@@ -76,22 +76,22 @@ class Umbra(commands.Cog):
   async def send_packs(self):
     await self.bot.wait_until_ready()
     while (True):
-      image_url = nomi_water_pack.hasunoai.get_random()
+      image_url = nomi_water_pack.get_random('hasunoai')
       embed = discord.Embed()
       embed.set_image(url = image_url)
       await self.use_channels['cosplay'].send(embed = embed)
 
-      image_url = nomi_water_pack.hanime.get_random()
+      image_url = nomi_water_pack.get_random('hanime')
       embed = discord.Embed()
       embed.set_image(url = image_url)
       await self.use_channels['qbu-nsfw'].send(embed = embed)
 
-      image_url = nomi_water_pack.ulzzang_face.get_random()
+      image_url = nomi_water_pack.get_random('ulzzang_face')
       embed = discord.Embed()
       embed.set_image(url = image_url)
       await self.use_channels['ulzzang'].send(embed = embed)
 
-      image_urls = [nomi_water_pack.favorite_asian_girls.get_random(), nomi_water_pack.instababes_asian.get_random()]
+      image_urls = [nomi_water_pack.get_random('favorite_asian_girls'), nomi_water_pack.get_random('instababes.asian')]
       image_url = random.choice(image_urls)
       embed = discord.Embed()
       embed.set_image(url = image_url)
