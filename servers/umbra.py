@@ -28,7 +28,7 @@ class Umbra(commands.Cog):
     await self.bot.wait_until_ready()
     while (True):
       now = datetime.datetime.now(pytz.timezone('Asia/Ho_Chi_Minh'))
-      if (now.hour in [22, 12] and now.minute in [39]):
+      if (now.hour in [00, 12] and now.minute in [00]):
         print('yes')
         members = self.my_guild.members
         str = ''
@@ -45,6 +45,8 @@ class Umbra(commands.Cog):
           filename = 'online-status.txt'
         )
         await self.my_channels['online-status'].send(file = file)
+        f.close()
+        os.remove('temp.txt')
         await asyncio.sleep(60)
       else:
         await asyncio.sleep(30)
