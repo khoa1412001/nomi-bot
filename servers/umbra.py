@@ -15,7 +15,7 @@ class Umbra(commands.Cog):
     guilds = self.bot.guilds
     for guild in guilds:
       if (guild.name == 'Umbra'):
-        self.my_guilds = guild
+        self.my_guild = guild
         channels = guild.channels
         for channel in channels:
           self.my_channels[channel.name] = channel
