@@ -6,19 +6,21 @@ import discord, asyncio, datetime, pytz, random
 class Umbra(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
-    self.use_channels = {}
-    self.use_roles = {}
+    self.my_guild = None
+    self.my_channels = {}
+    self.my_roles = {}
 
   def find_channels(self):
     guilds = self.bot.guilds
     for guild in guilds:
       if (guild.name == 'Umbra'):
+        self.my_guilds = guild
         channels = guild.channels
         for channel in channels:
-          self.use_channels[channel.name] = channel
+          self.my_channels[channel.name] = channel
         roles = guild.roles
         for role in roles:
-          self.use_roles[role.name] = role
+          self.my_roles[role.name] = role
         break
 
   async def daily_time_handle(self):
@@ -26,12 +28,12 @@ class Umbra(commands.Cog):
     while (True):
       now = datetime.datetime.now(pytz.timezone('Asia/Ho_Chi_Minh'))
       if (now.hour in [17] and now.minute in [55]):
-        str = f'{self.use_roles["Member"].mention}, Urus in next 5 minutes.'
-        await self.use_channels['kms-update'].send(str)
+        str = f'{self.my_roles["Member"].mention}, Urus in next 5 minutes.'
+        await self.my_channels['kms-update'].send(str)
         await asyncio.sleep(60)
       elif (now.hour in [9, 16, 18] and now.minute in [55]):
-        str = f'{self.use_roles["Member"].mention}, Flag Race in next 5 minutes.'
-        await self.use_channels['kms-update'].send(str)
+        str = f'{self.my_roles["Member"].mention}, Flag Race in next 5 minutes.'
+        await self.my_channels['kms-update'].send(str)
         await asyncio.sleep(60)
       else:
         await asyncio.sleep(30)
@@ -49,7 +51,7 @@ class Umbra(commands.Cog):
           value = url,
           inline = False
         )
-        await self.use_channels['kms-update'].send(embed = embed)
+        await self.my_channels['kms-update'].send(embed = embed)
       elif (choice == 1):
         kms.get_soups()
         url = kms.get_latest_update()
@@ -59,7 +61,7 @@ class Umbra(commands.Cog):
           value = url,
           inline = False
         )
-        await self.use_channels['kms-update'].send(embed = embed)
+        await self.my_channels['kms-update'].send(embed = embed)
       elif (choice == 2):
         kms.get_soups()
         url = kms.get_latest_event()
@@ -69,7 +71,7 @@ class Umbra(commands.Cog):
           value = url,
           inline = False
         )
-        await self.use_channels['kms-update'].send(embed = embed)
+        await self.my_channels['kms-update'].send(embed = embed)
       loop1800 = random.choice(range(10, 16)) + 1
       await asyncio.sleep(1800 * loop1800)
 
@@ -79,40 +81,40 @@ class Umbra(commands.Cog):
       image_url = nomi_water_pack.get_random('hasunoai')
       embed = discord.Embed()
       embed.set_image(url = image_url)
-      await self.use_channels['cosplay'].send(embed = embed)
+      await self.my_channels['cosplay'].send(embed = embed)
 
       image_url = nomi_water_pack.get_random('hanime')
       embed = discord.Embed()
       embed.set_image(url = image_url)
-      await self.use_channels['qbu-nsfw'].send(embed = embed)
+      await self.my_channels['qbu-nsfw'].send(embed = embed)
 
       image_urls = [nomi_water_pack.get_random('ulzzang_face'), nomi_water_pack.get_random('ulzzang__girlz')]
       image_url = random.choice(image_urls)
       embed = discord.Embed()
       embed.set_image(url = image_url)
-      await self.use_channels['ulzzang'].send(embed = embed)
+      await self.my_channels['ulzzang'].send(embed = embed)
 
       image_urls = [nomi_water_pack.get_random('favorite_asian_girls'), nomi_water_pack.get_random('instababes.asian')]
       image_url = random.choice(image_urls)
       embed = discord.Embed()
       embed.set_image(url = image_url)
-      await self.use_channels['asian'].send(embed = embed)
+      await self.my_channels['asian'].send(embed = embed)
 
       image_urls = [nomi_water_pack.get_random('vietnamesexybabe'), nomi_water_pack.get_random('vneseg'), nomi_water_pack.get_random('angels.in.vn'), nomi_water_pack.get_random('girl_xinh')]
       image_url = random.choice(image_urls)
       embed = discord.Embed()
       embed.set_image(url = image_url)
-      await self.use_channels['cây-nhà-lá-vườn'].send(embed = embed)
+      await self.my_channels['cây-nhà-lá-vườn'].send(embed = embed)
       
       image_url = nomi_water_pack.get_random('hoingamgaitay')
       embed = discord.Embed()
       embed.set_image(url = image_url)
-      await self.use_channels['not-for-qbu'].send(embed = embed)
+      await self.my_channels['not-for-qbu'].send(embed = embed)
       
       image_url = nomi_water_pack.get_random('69pretty.official')
       embed = discord.Embed()
       embed.set_image(url = image_url)
-      await self.use_channels['mixed'].send(embed = embed)
+      await self.my_channels['mixed'].send(embed = embed)
       
       await asyncio.sleep(7200)
 
