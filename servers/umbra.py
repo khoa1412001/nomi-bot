@@ -9,6 +9,7 @@ class Umbra(commands.Cog):
     self.my_guild = None
     self.my_channels = {}
     self.my_roles = {}
+    self.last_online = {}
 
   def find_channels(self):
     guilds = self.bot.guilds
@@ -22,6 +23,22 @@ class Umbra(commands.Cog):
         for role in roles:
           self.my_roles[role.name] = role
         break
+        
+  async def print_last_online(self):
+    await self.bot.wait_until_ready()
+    while (True):
+      now = datetime.datetime.now(pytz.timezone('Asia/Ho_Chi_Minh'))
+      if (now.hour in [10, 12] and now.minute in [17]):
+        members = self.my_guild.members
+        str = ''
+        for member in members:
+          if (member.id not in self.last_online):
+            self.last_online[member.id] == 'No information'
+          str += f'{member.display_name} : {self.last_online[member.id]}\n'
+        await self.my_channels['online-status'].send(str)
+        await asyncio.sleep(60)
+      else:
+        await asyncio.sleep(30)
 
   async def daily_time_handle(self):
     await self.bot.wait_until_ready()
@@ -125,7 +142,13 @@ class Umbra(commands.Cog):
     loop.create_task(self.daily_time_handle())
     #loop.create_task(self.kms_update())
     loop.create_task(self.send_packs())
-
+    loop.create_task(self.print_last_online())
+    
+  @commands.Cog.listener()
+  async def on_member_update(self, before, after):
+    if (after.guild == self.my_guild):
+      if (after.status != discord.Status.offline):
+        self.last_online[after.id] = datetime.datetime.now(pytz.timezone('Asia/Ho_Chi_Minh')).strftime("%Y-%m-%d %H:%M")
 
 def setup(bot):
   bot.add_cog(Umbra(bot))
