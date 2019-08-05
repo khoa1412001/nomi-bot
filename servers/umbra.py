@@ -34,7 +34,7 @@ class Umbra(commands.Cog):
         str = ''
         for member in members:
           if (member.id not in self.last_online):
-            self.last_online[member.id] == 'No information'
+            self.last_online[member.id] = 'No information'
           str += f'{member.display_name} : {self.last_online[member.id]}\n'
         await self.my_channels['online-status'].send(str)
         await asyncio.sleep(60)
