@@ -86,7 +86,8 @@ class Umbra(commands.Cog):
       embed.set_image(url = image_url)
       await self.use_channels['qbu-nsfw'].send(embed = embed)
 
-      image_url = nomi_water_pack.get_random('ulzzang_face')
+      image_urls = [nomi_water_pack.get_random('ulzzang_face'), nomi_water_pack.get_random('ulzzang__girlz')]
+      image_url = random.choice(image_urls)
       embed = discord.Embed()
       embed.set_image(url = image_url)
       await self.use_channels['ulzzang'].send(embed = embed)
@@ -97,7 +98,23 @@ class Umbra(commands.Cog):
       embed.set_image(url = image_url)
       await self.use_channels['asian'].send(embed = embed)
 
-      await asyncio.sleep(3600)
+      image_urls = [nomi_water_pack.get_random('vietnamesexybabe'), nomi_water_pack.get_random('vneseg'), nomi_water_pack.get_random('angels.in.vn'), nomi_water_pack.get_random('girl_xinh')]
+      image_url = random.choice(image_urls)
+      embed = discord.Embed()
+      embed.set_image(url = image_url)
+      await self.use_channels['cây-nhà-lá-vườn'].send(embed = embed)
+      
+      image_url = nomi_water_pack.get_random('hoingamgaitay')
+      embed = discord.Embed()
+      embed.set_image(url = image_url)
+      await self.use_channels['not-for-qbu'].send(embed = embed)
+      
+      image_url = nomi_water_pack.get_random('69pretty.official')
+      embed = discord.Embed()
+      embed.set_image(url = image_url)
+      await self.use_channels['mixed'].send(embed = embed)
+      
+      await asyncio.sleep(7200)
 
   @commands.Cog.listener()
   async def on_ready(self):
