@@ -28,7 +28,8 @@ class Umbra(commands.Cog):
     await self.bot.wait_until_ready()
     while (True):
       now = datetime.datetime.now(pytz.timezone('Asia/Ho_Chi_Minh'))
-      if (now.hour in [22, 12] and now.minute in [19]):
+      if (now.hour in [22, 12] and now.minute in [23]):
+        print('yes')
         members = self.my_guild.members
         str = ''
         for member in members:
@@ -149,6 +150,7 @@ class Umbra(commands.Cog):
     if (after.guild == self.my_guild):
       if (after.status != discord.Status.offline):
         self.last_online[after.id] = datetime.datetime.now(pytz.timezone('Asia/Ho_Chi_Minh')).strftime("%Y-%m-%d %H:%M")
+        print(f'{after.display_name} : {after.status}')
 
 def setup(bot):
   bot.add_cog(Umbra(bot))
