@@ -39,4 +39,5 @@ async def ping(ctx):
 init_log()
 bot.load_extension('servers.nomi-host-data')
 bot.load_extension('servers.umbra')
+bot.load_extension('servers.asteria')
 bot.run(token)
