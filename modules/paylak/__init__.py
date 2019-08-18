@@ -38,15 +38,18 @@ class Song(discord.PCMVolumeTransformer):
       return cls(discord.FFmpegPCMAudio(filename, options = '-vn'), data=data)
 
 class Player():
-  queue = []
+  queue = {}
   volume = 1.0
   
-  def add(self, song):
-    queue.append(song)
+  def add(self, guild, song):
+    if (guild not in self.queue):
+      self.queue[guild] = []
+    self.queue[guild].append(song)
 
-  def remove(self, index):
-    if (index > -1) and (index < len(queue)):
-      queue.pop(index)
+  def remove(self, guild, index):
+    if (guild in queue):
+      if (index > -1) and (index < len(queue[guild])):
+        self.queue[guild].pop(index)
   
-  def clear(self):
-    queue = []
+  def clear(self, guild):
+    queue[guild] = []
