@@ -1,6 +1,6 @@
 import random 
 
-packs_name = [
+packs = [
   'hasunoai', 
   'hanime', 
   'ulzzang__girlz', 
@@ -15,23 +15,32 @@ packs_name = [
   '69pretty.official'
 ]
 
-class WaterPack():
-  packs = {}
-
-  def __init__(self):
-    for pack_name in packs_name:
-      self.load(pack_name)
+class River():
+  name = ''
+  data = []
+  
+  def __init__(self, name):
+    self.name = name
+    self.load(name)
 
   def load(self, name):
     f = open(f'modules/nomi_water_pack/resources/{name}.nomi', 'r')
     urls = f.readlines()
     f.close()
-    self.packs[name] = []
+    self.data = []
     for url in urls:
-      self.packs[name].append(url[:-1])
+      self.data.append(url[:-1])
 
-  def get_random_one(self, name):
-    return random.choice(self.packs[name])
+  def get_random(self):
+    return random.choice(data)
+
+class Ocean():
+  data = []
+
+  def __init__(self):
+    for pack_name in packs:
+      self.data.append(River(pack_name))
   
   def get_random(self, names):
-    return self.get_random_one(self.packs[random.choice(names)])
+    r = random.choice(data)
+    return r.get_random()
