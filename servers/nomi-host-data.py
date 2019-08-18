@@ -2,7 +2,7 @@ from discord.ext import commands
 import platform, discord, datetime, pytz, random, asyncio
 from modules import talking_nomi
 
-class Nomi_Host_Data(commands.Cog):
+class NomiHostData(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
     self.my_guild = None
@@ -44,12 +44,19 @@ class Nomi_Host_Data(commands.Cog):
           req, res, cou = logic.request, logic.response, logic.counts
           str = (
             '```[ERROR]```'
+            f'No response found.\n',
             f'request: {req}\n'
-            f'count:\n {cou}\n'
           )
           await self.my_channels['no-response'].send(str)
         else:
           await message.channel.send(f'{message.author.mention} {rely}')
+          str = (
+            '```[DEBUG]```'
+            f'request: {req}\n',
+            f'response: {res}\n',
+            f'counts: {cou}\n'
+          )
+          await self.my_channels['no-response'].send(str)
       if 'messages' in self.my_channels:
         str = (
           '```[MESSAGE]```'
@@ -60,4 +67,4 @@ class Nomi_Host_Data(commands.Cog):
 
 
 def setup(bot):
-  bot.add_cog(Nomi_Host_Data(bot))
+  bot.add_cog(NomiHostData(bot))
