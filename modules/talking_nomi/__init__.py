@@ -124,7 +124,7 @@ class Logic():
               self.give_point(req_key, 0.8)
 
   def parse_sentence(self, sentence):
-    self.request = remove_mention_and_space(sentence)
+    self.request = self.remove_mention_and_space(sentence)
     self.response = 'not found response'
     self.count = {}
     words = self.request.lower().split()
