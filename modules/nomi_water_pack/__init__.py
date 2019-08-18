@@ -14,6 +14,11 @@ packs = [
   'hoingamgaitay', 
   '69pretty.official'
 ]
+o = None
+
+def prepare():
+  global o
+  o = Ocean()
 
 class River():
   name = ''
