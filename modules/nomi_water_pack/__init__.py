@@ -1,35 +1,37 @@
 import random 
 
-packs = {}
+packs_name = [
+  'hasunoai', 
+  'hanime', 
+  'ulzzang__girlz', 
+  'ulzzang_face', 
+  'favorite_asian_girls', 
+  'instababes.asian', 
+  'vietnamesexybabe', 
+  'vneseg', 
+  'angels.in.vn', 
+  'girl_xinh', 
+  'hoingamgaitay', 
+  '69pretty.official'
+]
 
-def load(name):
-  f = open(f'modules/nomi_water_pack/resources/{name}.nomi', 'r')
-  urls = f.readlines()
-  f.close()
-  global packs
-  packs[name] = []
-  for url in urls:
-    packs[name].append(url[:-1])
+class WaterPack():
+  packs = {}
 
-def get_random(name):
-  global packs
-  return random.choice(packs[name])
+  def __init__(self):
+    for pack_name in packs_name:
+      self.load(pack_name)
 
-load('hasunoai')
+  def load(self, name):
+    f = open(f'modules/nomi_water_pack/resources/{name}.nomi', 'r')
+    urls = f.readlines()
+    f.close()
+    self.packs[name] = []
+    for url in urls:
+      self.packs[name].append(url[:-1])
 
-load('hanime')
-
-load('ulzzang__girlz')
-load('ulzzang_face')
-
-load('favorite_asian_girls')
-load('instababes.asian')
-
-load('vietnamesexybabe')
-load('vneseg')
-load('angels.in.vn')
-load('girl_xinh')
-
-load('hoingamgaitay')
-
-load('69pretty.official')
+  def get_random_one(self, name):
+    return random.choice(self.packs[name])
+  
+  def get_random(self, names):
+    return self.get_random_one(self.packs[random.choice(names)])
