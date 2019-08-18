@@ -16,6 +16,8 @@ ytdl_format_options = {
 ytdl = None
 
 def prepare():
+  if not discord.opus.is_loaded():
+    discord.opus.load_opus('opus')
   ytdl = youtube_dl.YoutubeDL(ytdl_format_options)
 
 class Song(discord.PCMVolumeTransformer):
@@ -33,7 +35,7 @@ class Song(discord.PCMVolumeTransformer):
       if 'entries' in data:
         data = data['entries'][0]
       filename = data['url'] if stream else ytdl.prepare_filename(data)
-      return cls(discord.FFmpegPCMAudio(filename, **ffmpeg_options), data=data)
+      return cls(discord.FFmpegPCMAudio(filename, options = '-vn'), data=data)
 
 class Player():
   queue = []
