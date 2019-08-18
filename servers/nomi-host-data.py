@@ -1,6 +1,6 @@
 from discord.ext import commands
 import platform, discord, datetime, pytz, random, asyncio
-from modules import talking_nomi
+from modules import chitchat
 
 class NomiHostData(commands.Cog):
   def __init__(self, bot):
@@ -38,7 +38,7 @@ class NomiHostData(commands.Cog):
         async with message.channel.typing():
           delay_time = random.choice(range(45, 100)) / 100.0
           await asyncio.sleep(delay_time)
-        logic = talking_nomi.Logic(message.content)
+        logic = chitchat.Logic(message.content)
         req, res, cou = logic.request, logic.response, logic.counts
         if (res == 'not found response'):
           str = (
