@@ -38,9 +38,10 @@ class Nomi_Host_Data(commands.Cog):
         async with message.channel.typing():
           delay_time = random.choice(range(45, 100)) / 100.0
           await asyncio.sleep(delay_time)
-        rely = talking_nomi.parse_sentence(message.content)
+        logic = talking_nomi.Logic(message.content)
+        rely = logic.response
         if (rely == 'not found response'):
-          req, res, cou = talking_nomi.return_error()
+          req, res, cou = logic.request, logic.response, logic.counts
           str = (
             '```[ERROR]```'
             f'request: {req}\n'
