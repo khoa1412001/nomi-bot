@@ -65,7 +65,7 @@ def prepare():
 class Logic():
   request = ''
   response = ''
-  count = {}
+  counts = {}
 
   def __init__(self, req):
     global ready
