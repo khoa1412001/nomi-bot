@@ -11,7 +11,7 @@ class Umbra(commands.Cog):
     self.my_roles = {}
     self.last_online = {}
 
-  def find_channels(self):
+  def find_objects(self):
     guilds = self.bot.guilds
     for guild in guilds:
       if (guild.name == 'Umbra'):
@@ -28,7 +28,7 @@ class Umbra(commands.Cog):
     await self.bot.wait_until_ready()
     while (True):
       now = datetime.datetime.now(pytz.timezone('Asia/Ho_Chi_Minh'))
-      if (now.hour in [00, 12] and now.minute in [00]):
+      if (now.hour in [0, 12] and now.minute in [0]):
         members = self.my_guild.members
         str = ''
         print(self.last_online)
@@ -67,92 +67,51 @@ class Umbra(commands.Cog):
       else:
         await asyncio.sleep(30)
 
-  async def kms_update(self):
-    await self.bot.wait_until_ready()
-    while (True):
-      choice = random.choice([0,1,2])
-      if (choice == 0):
-        kms.get_soups()
-        url = kms.get_latest_notice()
-        embed = discord.Embed()
-        embed.add_field(
-          name = 'A new notice has been released, click to see now',
-          value = url,
-          inline = False
-        )
-        await self.my_channels['kms-update'].send(embed = embed)
-      elif (choice == 1):
-        kms.get_soups()
-        url = kms.get_latest_update()
-        embed = discord.Embed()
-        embed.add_field(
-          name = 'Some update for you',
-          value = url,
-          inline = False
-        )
-        await self.my_channels['kms-update'].send(embed = embed)
-      elif (choice == 2):
-        kms.get_soups()
-        url = kms.get_latest_event()
-        embed = discord.Embed()
-        embed.add_field(
-          name = 'Check out the event are ongoing',
-          value = url,
-          inline = False
-        )
-        await self.my_channels['kms-update'].send(embed = embed)
-      loop1800 = random.choice(range(10, 16)) + 1
-      await asyncio.sleep(1800 * loop1800)
-
   async def send_packs(self):
     await self.bot.wait_until_ready()
     while (True):
-      image_url = nomi_water_pack.get_random('hasunoai')
+      image_url = nomi_water_pack.o.get_random(['hasunoai'])
       embed = discord.Embed()
       embed.set_image(url = image_url)
       await self.my_channels['cosplay'].send(embed = embed)
 
-      image_url = nomi_water_pack.get_random('hanime')
+      image_url = nomi_water_pack.o.get_random(['hanime'])
       embed = discord.Embed()
       embed.set_image(url = image_url)
       await self.my_channels['qbu-nsfw'].send(embed = embed)
 
-      image_urls = [nomi_water_pack.get_random('ulzzang_face'), nomi_water_pack.get_random('ulzzang__girlz')]
-      image_url = random.choice(image_urls)
+      image_url = nomi_water_pack.o.get_random(['ulzzang_face', 'ulzzang__girlz'])
       embed = discord.Embed()
       embed.set_image(url = image_url)
       await self.my_channels['ulzzang'].send(embed = embed)
 
-      image_urls = [nomi_water_pack.get_random('favorite_asian_girls'), nomi_water_pack.get_random('instababes.asian')]
-      image_url = random.choice(image_urls)
+      image_url = nomi_water_pack.o.get_random(['favorite_asian_girls', 'instababes.asian'])
       embed = discord.Embed()
       embed.set_image(url = image_url)
       await self.my_channels['asian'].send(embed = embed)
 
-      image_urls = [nomi_water_pack.get_random('vietnamesexybabe'), nomi_water_pack.get_random('vneseg'), nomi_water_pack.get_random('angels.in.vn'), nomi_water_pack.get_random('girl_xinh')]
-      image_url = random.choice(image_urls)
+      image_url = nomi_water_pack.o.get_random(['vietnamesexybabe', 'vneseg', 'angels.in.vn', 'girl_xinh'])
       embed = discord.Embed()
       embed.set_image(url = image_url)
       await self.my_channels['cây-nhà-lá-vườn'].send(embed = embed)
       
-      image_url = nomi_water_pack.get_random('hoingamgaitay')
+      image_url = nomi_water_pack.get_random(['hoingamgaitay'])
       embed = discord.Embed()
       embed.set_image(url = image_url)
       await self.my_channels['not-for-qbu'].send(embed = embed)
       
-      image_url = nomi_water_pack.get_random('69pretty.official')
+      image_url = nomi_water_pack.get_random(['69pretty.official'])
       embed = discord.Embed()
       embed.set_image(url = image_url)
       await self.my_channels['mixed'].send(embed = embed)
       
-      await asyncio.sleep(7200)
+      await asyncio.sleep(5400)
 
   @commands.Cog.listener()
   async def on_ready(self):
-    self.find_channels()
+    self.find_objects()
     loop = asyncio.get_event_loop()
     loop.create_task(self.daily_time_handle())
-    #loop.create_task(self.kms_update())
     loop.create_task(self.send_packs())
     loop.create_task(self.print_last_online())
     
