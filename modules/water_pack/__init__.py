@@ -29,7 +29,7 @@ class River():
     self.load(name)
 
   def load(self, name):
-    f = open(f'modules/nomi_water_pack/resources/{name}.nomi', 'r')
+    f = open(f'modules/water_pack/resources/{name}.nomi', 'r')
     urls = f.readlines()
     f.close()
     self.data = []
