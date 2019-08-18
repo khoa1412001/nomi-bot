@@ -99,7 +99,7 @@ class Logic():
       if self.counts[key] == max_count:
         keys.append(key)
     if self.request == '':
-      self.response = all_ress['res0']
+      self.response = random.choice(all_ress['res0'])
     elif len(keys) > 0:
       response_keys = req_to_res[random.choice(keys)]
       self.response = random.choice(all_ress[random.choice(response_keys)])
