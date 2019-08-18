@@ -64,6 +64,5 @@ class NomiHostData(commands.Cog):
         )
         await self.my_channels['messages'].send(str)
 
-
 def setup(bot):
   bot.add_cog(NomiHostData(bot))
