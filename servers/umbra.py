@@ -69,37 +69,37 @@ class Umbra(commands.Cog):
   async def send_packs(self):
     await self.bot.wait_until_ready()
     while (True):
-      image_url = nomi_water_pack.o.get_random(['hasunoai'])
+      image_url = water_pack.o.get_random(['hasunoai'])
       embed = discord.Embed()
       embed.set_image(url = image_url)
       await self.my_channels['cosplay'].send(embed = embed)
 
-      image_url = nomi_water_pack.o.get_random(['hanime'])
+      image_url = water_pack.o.get_random(['hanime'])
       embed = discord.Embed()
       embed.set_image(url = image_url)
       await self.my_channels['qbu-nsfw'].send(embed = embed)
 
-      image_url = nomi_water_pack.o.get_random(['ulzzang_face', 'ulzzang__girlz'])
+      image_url = water_pack.o.get_random(['ulzzang_face', 'ulzzang__girlz'])
       embed = discord.Embed()
       embed.set_image(url = image_url)
       await self.my_channels['ulzzang'].send(embed = embed)
 
-      image_url = nomi_water_pack.o.get_random(['favorite_asian_girls', 'instababes.asian'])
+      image_url = water_pack.o.get_random(['favorite_asian_girls', 'instababes.asian'])
       embed = discord.Embed()
       embed.set_image(url = image_url)
       await self.my_channels['asian'].send(embed = embed)
 
-      image_url = nomi_water_pack.o.get_random(['vietnamesexybabe', 'vneseg', 'angels.in.vn', 'girl_xinh'])
+      image_url = water_pack.o.get_random(['vietnamesexybabe', 'vneseg', 'angels.in.vn', 'girl_xinh'])
       embed = discord.Embed()
       embed.set_image(url = image_url)
       await self.my_channels['cây-nhà-lá-vườn'].send(embed = embed)
       
-      image_url = nomi_water_pack.o.get_random(['hoingamgaitay'])
+      image_url = water_pack.o.get_random(['hoingamgaitay'])
       embed = discord.Embed()
       embed.set_image(url = image_url)
       await self.my_channels['not-for-qbu'].send(embed = embed)
       
-      image_url = nomi_water_pack.o.get_random(['69pretty.official'])
+      image_url = water_pack.o.get_random(['69pretty.official'])
       embed = discord.Embed()
       embed.set_image(url = image_url)
       await self.my_channels['mixed'].send(embed = embed)
