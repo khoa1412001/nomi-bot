@@ -46,7 +46,7 @@ class Asteria(commands.Cog):
       embed.set_image(url = image_url)
       await self.my_channels['vn'].send(embed = embed)
       
-      image_url = nomi_water_pack.get_random('[hoingamgaitay]')
+      image_url = nomi_water_pack.o.get_random('[hoingamgaitay]')
       embed = discord.Embed()
       embed.set_image(url = image_url)
       await self.my_channels['western'].send(embed = embed)
