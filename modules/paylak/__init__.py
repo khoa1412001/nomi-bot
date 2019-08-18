@@ -1,4 +1,4 @@
-import youtube_dl
+import discord, youtube_dl
 
 ytdl_format_options = {
     'format': 'bestaudio/best',
