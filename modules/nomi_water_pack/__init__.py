@@ -37,7 +37,7 @@ class River():
       self.data.append(url[:-1])
 
   def get_random(self):
-    return random.choice(data)
+    return random.choice(self.data)
 
 class Ocean():
   data = []
