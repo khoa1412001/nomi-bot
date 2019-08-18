@@ -48,9 +48,11 @@ class Ocean():
       self.data.append(River(pack_name))
   
   def get_random(self, names):
-    rs = []
+    indexs = []
+    i = 0
     for r in self.data:
       if r.name in names:
-        rs.append(r.name)
-    r = random.choice(rs)
-    return self.data[r].get_random()
+        indexs.append(i)
+      i += 1
+    i = random.choice(indexs)
+    return self.data[i].get_random()
