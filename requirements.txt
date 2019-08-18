@@ -2,3 +2,4 @@ pip
 pytz
 beautifulsoup4
 discord.py[voice]
+youtube-dl
