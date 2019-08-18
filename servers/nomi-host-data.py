@@ -43,7 +43,7 @@ class NomiHostData(commands.Cog):
         if (res == 'not found response'):
           str = (
             '```[ERROR]```'
-            f'No response found.\n',
+            f'No response found.\n'
             f'request: {req}\n'
           )
           await self.my_channels['talking'].send(str)
@@ -51,8 +51,8 @@ class NomiHostData(commands.Cog):
           await message.channel.send(f'{message.author.mention} {res}')
           str = (
             '```[DEBUG]```'
-            f'request: {req}\n',
-            f'response: {res}\n',
+            f'request: {req}\n'
+            f'response: {res}\n'
             f'counts: {cou}\n'
           )
           await self.my_channels['talking'].send(str)
