@@ -14,11 +14,9 @@ ytdl_format_options = {
     'source_address': '0.0.0.0'
 }
 ytdl = None
-p = None
 
 def prepare():
   ytdl = youtube_dl.YoutubeDL(ytdl_format_options)
-  p = Player()
 
 class Song(discord.PCMVolumeTransformer):
   def __init__(self, source, *, data, volume = 1.0):
