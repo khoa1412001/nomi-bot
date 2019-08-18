@@ -43,13 +43,14 @@ class Ocean():
   data = []
 
   def __init__(self):
+    global packs
     for pack_name in packs:
       self.data.append(River(pack_name))
   
   def get_random(self, names):
     rs = []
-    for r in data:
+    for r in self.data:
       if r.name in names:
         rs.append(r.name)
     r = random.choice(rs)
-    return data[r].get_random()
+    return self.data[r].get_random()
