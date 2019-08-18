@@ -8,7 +8,7 @@ ready = False
 
 def read_requests():
   global all_reqs
-  f = open('modules/talking_nomi/resources/requests.nomi', 'r')
+  f = open('modules/chitchat/resources/requests.nomi', 'r')
   lines = f.readlines()
   f.close()
   for line in lines:
@@ -20,7 +20,7 @@ def read_requests():
 
 def read_responses():
   global all_ress
-  f = open('modules/talking_nomi/resources/responses.nomi', 'r')
+  f = open('modules/chitchat/resources/responses.nomi', 'r')
   lines = f.readlines()
   f.close()
   for line in lines:
@@ -32,7 +32,7 @@ def read_responses():
 
 def read_request_to_response():
   global req_to_res
-  f = open('modules/talking_nomi/resources/request_to_response.nomi', 'r')
+  f = open('modules/chitchat/resources/request_to_response.nomi', 'r')
   lines = f.readlines()
   f.close()
   for line in lines:
@@ -44,7 +44,7 @@ def read_request_to_response():
 
 def read_similars():
   global all_similars
-  f = open('modules/talking_nomi/resources/similars.nomi', 'r')
+  f = open('modules/chitchat/resources/similars.nomi', 'r')
   lines = f.readlines()
   f.close()
   for line in lines:
