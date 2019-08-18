@@ -20,8 +20,8 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
-  if (message.author.id != self.bot.user.id):
-    if (len(message.mentions) == 1) and (self.bot.user.mentioned_in(message)):
+  if (message.author.id != bot.user.id):
+    if (len(message.mentions) == 1) and (bot.user.mentioned_in(message)):
       async with message.channel.typing():
         delay_time = random.choice(range(45, 100)) / 100.0
         await asyncio.sleep(delay_time)
