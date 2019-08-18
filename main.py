@@ -1,6 +1,6 @@
 from discord.ext import commands
 import discord, os
-from modules import nomi_water_pack, talking_nomi
+from modules import water_pack, chitchat, paylak
 
 token = os.getenv('token')
 prefix_char = '#'
@@ -23,8 +23,9 @@ async def on_message(message):
   if (message.content.startswith(prefix_char)):
     await bot.process_commands(message)
 
-talking_nomi.prepare()
-nomi_water_pack.prepare()
+chitchat.prepare()
+water_pack.prepare()
+paylak.prepare()
 bot.load_extension('servers.nomi-host-data')
 bot.load_extension('servers.umbra')
 bot.load_extension('servers.asteria')
