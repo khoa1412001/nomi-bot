@@ -1,7 +1,6 @@
 from discord.ext import commands
-from modules.webhook import kms
 from modules import nomi_water_pack
-import discord, asyncio, datetime, pytz, random
+import discord, asyncio, datetime, pytz
 
 class Umbra(commands.Cog):
   def __init__(self, bot):
