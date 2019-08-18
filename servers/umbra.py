@@ -1,6 +1,6 @@
 from discord.ext import commands
 import discord, asyncio, datetime, pytz
-from modules import nomi_water_pack
+from modules import water_pack
 
 class Umbra(commands.Cog):
   def __init__(self, bot):
