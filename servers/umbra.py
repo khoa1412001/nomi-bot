@@ -94,12 +94,12 @@ class Umbra(commands.Cog):
       embed.set_image(url = image_url)
       await self.my_channels['cây-nhà-lá-vườn'].send(embed = embed)
       
-      image_url = nomi_water_pack.get_random(['hoingamgaitay'])
+      image_url = nomi_water_pack.o.get_random(['hoingamgaitay'])
       embed = discord.Embed()
       embed.set_image(url = image_url)
       await self.my_channels['not-for-qbu'].send(embed = embed)
       
-      image_url = nomi_water_pack.get_random(['69pretty.official'])
+      image_url = nomi_water_pack.o.get_random(['69pretty.official'])
       embed = discord.Embed()
       embed.set_image(url = image_url)
       await self.my_channels['mixed'].send(embed = embed)
