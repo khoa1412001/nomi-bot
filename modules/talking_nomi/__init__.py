@@ -18,7 +18,7 @@ def read_requests():
     value = str_split[1].split('||')
     all_reqs[key] = value
 
-def read_response():
+def read_responses():
   global all_ress
   f = open('modules/talking_nomi/resources/responses.nomi', 'r')
   lines = f.readlines()
