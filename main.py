@@ -1,21 +1,12 @@
 from discord.ext import commands
-import discord
-import logging
-import os
+import discord, os
+from modules import nomi_water_pack, talking_nomi
 
 token = os.getenv('token')
 prefix_char = '#'
 bot = commands.Bot(
   command_prefix = prefix_char
 )
-
-def init_log():
-  logger = logging.getLogger('discord')
-  logger.setLevel(logging.DEBUG)
-  handler = logging.FileHandler(filename = 'discord.log', encoding = 'utf-8', mode = 'w')
-  handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
-  logger.addHandler(handler)
-
 
 @bot.event
 async def on_ready():
@@ -32,11 +23,8 @@ async def on_message(message):
   if (message.content.startswith(prefix_char)):
     await bot.process_commands(message)
 
-@bot.command
-async def ping(ctx):
-  ctx.send('pong')
-
-init_log()
+talking_nomi.prepare()
+nomi_water_pack.prepare()
 bot.load_extension('servers.nomi-host-data')
 bot.load_extension('servers.umbra')
 bot.load_extension('servers.asteria')
