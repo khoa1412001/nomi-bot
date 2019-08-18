@@ -1,5 +1,5 @@
 from discord.ext import commands
-import discord, os
+import discord, os, random, asyncio
 from modules import water_pack, chitchat, paylak
 
 token = os.getenv('token')
