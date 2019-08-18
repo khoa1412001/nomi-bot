@@ -1,6 +1,6 @@
 from discord.ext import commands
-from modules import nomi_water_pack
 import discord, asyncio
+from modules import nomi_water_pack
 
 class Asteria(commands.Cog):
   def __init__(self, bot):
