@@ -49,7 +49,7 @@ async def on_message(message):
     await bot.process_commands(message)
 
 @bot.command()
-async def join(ctx, *, channel: discord.VoiceChannel = None):
+async def join(ctx, *, channel = None):
   if channel is None:
     if ctx.author.voice.channel is not None:
       channel = ctx.author.voice.channel
@@ -57,22 +57,24 @@ async def join(ctx, *, channel: discord.VoiceChannel = None):
     if ctx.voice_client is not None:
       return await ctx.voice_client.move_to(channel)
     await channel.connect()
+    await ctx.send(f'Joined {channel.name}.')
   else:
-    await ctx.send('Error: no voice channel to join')
+    await ctx.send('Error: no voice channel to join.')
 
 @bot.command()
 async def leave(ctx):
   if ctx.voice_client is not None:
     await ctx.voice_client.disconnect()
+    await ctx.send('Left voice.')
   else:
-    await ctx.send('Error: not in any voice channel')
+    await ctx.send('Error: not in any voice channel.')
 
 @bot.command()
 async def play(ctx, *, url):
   async with ctx.typing():
     player = await paylak.Song.from_url(url, loop=self.bot.loop, stream = True)
     ctx.voice_client.play(player)
-  await ctx.send(f'Now playing: {player.title}')
+  await ctx.send(f'Now playing: {player.title}.')
 
 @bot.command()
 async def stop(ctx):
@@ -80,13 +82,13 @@ async def stop(ctx):
     await ctx.voice_client.stop()
 
 @play.before_invoke
-async def ensure_voice(self, ctx):
+async def ensure_voice(ctx):
   if ctx.voice_client is None:
     if ctx.author.voice:
       await ctx.author.voice.channel.connect()
     else:
-      await ctx.send("You are not connected to a voice channel.")
-      raise commands.CommandError("Author not connected to a voice channel.")
+      await ctx.send('You are not connected to a voice channel.')
+      raise commands.CommandError('Author not connected to a voice channel.')
   elif ctx.voice_client.is_playing():
     ctx.voice_client.stop()
 
