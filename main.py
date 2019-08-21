@@ -73,6 +73,7 @@ async def leave(ctx):
 async def play(ctx, *, url):
   async with ctx.typing():
     player = await paylak.Song.from_url(url, loop=bot.loop)
+    print(player)
     ctx.voice_client.play(player)
   await ctx.send(f'Now playing: {player.title}.')
 
