@@ -22,7 +22,7 @@ def prepare():
     discord.opus.load_opus('opus')
   
 class Song(discord.PCMVolumeTransformer):
-  def __init__(self, source, *, data, volume = 1.0):
+  def __init__(self, source, *, data, volume = 0.5):
     super().__init__(source, volume)
     self.data = data
     self.title = data['title']
