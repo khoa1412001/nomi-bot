@@ -28,14 +28,14 @@ class Song(discord.PCMVolumeTransformer):
     self.url = data['url']
     self.duration = data['duration']
 
-    @classmethod
-    async def from_url(cls, url, *, loop = None, stream = False):
-      loop = loop or asyncio.get_event_loop()
-      data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download=not stream))
-      if 'entries' in data:
-        data = data['entries'][0]
-      filename = data['url'] if stream else ytdl.prepare_filename(data)
-      return cls(discord.FFmpegPCMAudio(filename, options = '-vn'), data=data)
+  @classmethod
+  async def from_url(cls, url, *, loop = None, stream = False):
+    loop = loop or asyncio.get_event_loop()
+    data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download=not stream))
+    if 'entries' in data:
+      data = data['entries'][0]
+    filename = data['url'] if stream else ytdl.prepare_filename(data)
+    return cls(discord.FFmpegPCMAudio(filename, options = '-vn'), data=data)
 
 class Player():
   queue = {}
