@@ -16,10 +16,11 @@ ytdl_format_options = {
 ytdl = None
 
 def prepare():
+  global ytdl
+  ytdl = youtube_dl.YoutubeDL(ytdl_format_options)
   if not discord.opus.is_loaded():
     discord.opus.load_opus('opus')
-  ytdl = youtube_dl.YoutubeDL(ytdl_format_options)
-
+  
 class Song(discord.PCMVolumeTransformer):
   def __init__(self, source, *, data, volume = 1.0):
     super().__init__(source, volume)
