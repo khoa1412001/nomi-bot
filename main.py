@@ -49,7 +49,7 @@ async def on_message(message):
     await bot.process_commands(message)
 
 @bot.command()
-async def join(ctx, *, channel: discord.VoiceChannel):
+async def join(ctx, *, channel: discord.VoiceChannel = None):
   if channel is None:
     if ctx.author.voice.channel is not None:
       channel = ctx.author.voice.channel
