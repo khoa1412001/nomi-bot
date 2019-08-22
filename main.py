@@ -11,16 +11,25 @@ bot = commands.Bot(
 async def on_music_update():
   await bot.wait_until_ready()
   p = paylak.p
+  print(1)
   for guild in p.queue:
+    print(2)
     if guild.voice_client:
+      print(3)
       if not guild.voice_client.is_playing():
+        print(4)
         if not p.is_playing[guild]:
+          print(5)
           if p.cur_song_index[guild] < len(p.queue[guild]):
+            print(6)
             guild.voice_client.play(p.queue[guild][p.cur_song_index[guild]])
             p.is_playing[guild] = True
         else:
+          print(7)
           p.cur_song_index[guild] += 1
           p.is_playing[guild] = False
+  print(8)
+  await asyncio.sleep(1)
 
 @bot.event
 async def on_ready():
