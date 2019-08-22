@@ -43,6 +43,7 @@ class Song(discord.PCMVolumeTransformer):
 class Player():
   queue = {}
   cur_song_index = {}
+  is_playing = {}
   volume = 0.5
   stream = False
   loop = False
@@ -52,6 +53,8 @@ class Player():
       self.queue[guild] = []
     if guild not in self.cur_song_index:
       self.cur_song_index[guild] = 0
+    if guild not in self.is_playing:
+      self.is_playing[guild] = False
     self.queue[guild].append(song)
 
   def remove(self, guild, index):
