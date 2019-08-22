@@ -14,12 +14,14 @@ ytdl_format_options = {
     'source_address': '0.0.0.0'
 }
 ytdl = None
+p = None
 
 def prepare():
   global ytdl
   ytdl = youtube_dl.YoutubeDL(ytdl_format_options)
   if not discord.opus.is_loaded():
     discord.opus.load_opus('opus')
+  p = Player()
   
 class Song(discord.PCMVolumeTransformer):
   def __init__(self, source, *, data, volume = 0.5):
@@ -30,17 +32,20 @@ class Song(discord.PCMVolumeTransformer):
     self.duration = data['duration']
 
   @classmethod
-  async def from_url(cls, url, *, loop = None, stream = False):
+  async def from_url(cls, url, *, loop = None, stream = False, volume = 0.5):
     loop = loop or asyncio.get_event_loop()
-    data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download=not stream))
+    data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download = not stream))
     if 'entries' in data:
       data = data['entries'][0]
     filename = data['url'] if stream else ytdl.prepare_filename(data)
-    return cls(discord.FFmpegPCMAudio(filename, options = '-vn'), data=data)
+    return cls(discord.FFmpegPCMAudio(filename, options = '-vn'), data = data, volume = volume)
 
 class Player():
   queue = {}
-  volume = 1.0
+  cur_song_index = 0
+  volume = 0.5
+  stream = False
+  loop = False
   
   def add(self, guild, song):
     if (guild not in self.queue):
