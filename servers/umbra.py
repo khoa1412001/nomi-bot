@@ -30,10 +30,12 @@ class Umbra(commands.Cog):
       if (now.hour in [0, 12] and now.minute in [0]):
         members = self.my_guild.members
         str = ''
-        for member in members:
+        for member in members: 
+          if member.bot:
+            continue
           if (member.id not in self.last_online):
             self.last_online[member.id] = 'No information'
-          str += f'{member.username}#{member.discriminator} ({member.display_name}) : {self.last_online[member.id]}\n'
+          str += f'{member.name}#{member.discriminator} ({member.display_name}) : {self.last_online[member.id]}\n'
         f = open('temp.txt', 'w')
         f.write(str)
         f.close()
