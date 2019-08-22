@@ -17,7 +17,9 @@ async def on_music_update():
         if not guild.voice_client.is_playing():
           if not p.is_playing[guild]:
             if p.cur_song_index[guild] < len(p.queue[guild]):
-              guild.voice_client.play(p.queue[guild][p.cur_song_index[guild]])
+              song = p.queue[guild][p.cur_song_index[guild]]
+              guild.voice_client.play(song)
+              print(song.title)
               p.is_playing[guild] = True
           else:
             p.cur_song_index[guild] += 1
