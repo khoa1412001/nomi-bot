@@ -126,8 +126,6 @@ async def ensure_voice(ctx):
     else:
       await ctx.send('Error: you are not connected to a voice channel.')
       raise commands.CommandError('Author not connected to a voice channel.')
-  elif ctx.voice_client.is_playing():
-    ctx.voice_client.stop()
 
 chitchat.prepare()
 water_pack.prepare()
