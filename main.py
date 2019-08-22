@@ -140,7 +140,7 @@ async def skip(ctx):
 
 @bot.command()
 async def loop(ctx):
-  paylak.p.loop[ctx.guild] = !paylak.p.loop[ctx.guild]
+  paylak.p.loop[ctx.guild] = not paylak.p.loop[ctx.guild]
   if paylak.p.loop[ctx.guild]:
     await ctx.send('Loop is on.')
   else:
@@ -148,7 +148,7 @@ async def loop(ctx):
 
 @bot.command()
 async def stream(ctx):
-  paylak.p.stream[ctx.guild] = !paylak.p.stream[ctx.guild]
+  paylak.p.stream[ctx.guild] = not paylak.p.stream[ctx.guild]
   if paylak.p.stream[ctx.guild]:
     await ctx.send('Stream is on.')
   else:
