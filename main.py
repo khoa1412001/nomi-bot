@@ -11,14 +11,13 @@ bot = commands.Bot(
 async def on_music_update():
   await bot.wait_until_ready()
   while True:
-
-    if guild.voice_client:
-      if len(guild.voice_client.channels.members) == 1:
-        await guild.voice_client.channel.disconnect()
-    
     p = paylak.p
     for guild in p.queue:
+
       if guild.voice_client:
+        if len(guild.voice_client.channels.members) == 1:
+          await guild.voice_client.channel.disconnect()
+    
         if not guild.voice_client.is_playing():
           if not p.is_playing[guild]:
             if p.cur_song_index[guild] < len(p.queue[guild]):
