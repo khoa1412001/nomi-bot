@@ -25,16 +25,15 @@ def prepare():
     discord.opus.load_opus('opus')
   
 class Song(discord.PCMVolumeTransformer):
-  def __init__(self, source, *, data, volume = 0.5):
+  def __init__(self, source, *, data, volume = 1.0):
     super().__init__(source, volume)
     self.data = data
     self.title = data['title']
     self.url = data['url']
     self.duration = data['duration']
-    print(self.volume)
 
   @classmethod
-  async def from_url(cls, url, *, loop = None, stream = False, volume = 0.5):
+  async def from_url(cls, url, *, loop = None, stream = False, volume = 1.0):
     loop = loop or asyncio.get_event_loop()
     data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download = not stream))
     if 'entries' in data:
@@ -46,17 +45,25 @@ class Player():
   queue = {}
   cur_song_index = {}
   is_playing = {}
-  volume = 1.0
-  stream = False
-  loop = False
-  
-  def add(self, guild, song):
+  loop = {}
+  stream = {}
+  volume = {}
+
+  def init_guild(self, guild):
     if guild not in self.queue:
       self.queue[guild] = []
     if guild not in self.cur_song_index:
       self.cur_song_index[guild] = 0
     if guild not in self.is_playing:
-      self.is_playing[guild] = False
+      self.is_playing[guild] = False 
+    if guild not in self.loop:
+      self.loop[guild] = False
+    if guild not in self.stream:
+      self.stream[guild] = False
+    if guild not in self.volume:
+      self.volume[guild] = 1.0
+  
+  def add(self, guild, song):
     self.queue[guild].append(song)
 
   def remove(self, guild, index):
