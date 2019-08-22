@@ -71,12 +71,13 @@ async def on_message(message):
 @bot.command()
 async def join(ctx):
   if ctx.author.voice:
-    async with ctx.typing():
-      if ctx.voice_client is None:
-        await ctx.author.voice.channel.connect()
-      else:
-        await ctx.voice_client.move_to(ctx.author.voice.channel)
-    await ctx.send(f'Joined `{channel.name}`.')
+    channel = ctx.author.voice.channel.connect()
+    if ctx.voice_clien.channel is not None:
+      await ctx.voice_client.move_to(channel)
+      await ctx.send(f'Moved to `{channel.name}`.')
+    else:
+      await channel.connect()
+      await ctx.send(f'Joined `{channel.name}`.')
   else:
     await ctx.send('Error: you are not in any voice channel.')
 
