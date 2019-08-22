@@ -92,7 +92,7 @@ async def play(ctx, *, url):
   async with ctx.typing():
     song = await paylak.Song.from_url(url, loop=bot.loop, stream = paylak.p.stream, volume = paylak.p.volume)
     paylak.p.add(ctx.guild, song)
-  await ctx.send(f'Added to queue: {player.title}.')
+  await ctx.send(f'Added to queue: {song.title}.')
 
 @bot.command()
 async def stop(ctx):
