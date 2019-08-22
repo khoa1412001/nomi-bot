@@ -31,6 +31,7 @@ class Song(discord.PCMVolumeTransformer):
     self.title = data['title']
     self.url = data['url']
     self.duration = data['duration']
+    print(self.volume)
 
   @classmethod
   async def from_url(cls, url, *, loop = None, stream = False, volume = 0.5):
