@@ -42,7 +42,7 @@ class Song(discord.PCMVolumeTransformer):
 
 class Player():
   queue = {}
-  cur_song_index = 0
+  cur_song_index = {}
   volume = 0.5
   stream = False
   loop = False
