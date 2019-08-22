@@ -46,7 +46,7 @@ class Player():
   queue = {}
   cur_song_index = {}
   is_playing = {}
-  volume = 0.5
+  volume = 1.0
   stream = False
   loop = False
   
