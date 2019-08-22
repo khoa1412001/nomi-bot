@@ -83,6 +83,20 @@ async def stop(ctx):
   if ctx.voice_client.is_playing():
     await ctx.voice_client.stop()
 
+@bot.command()
+async def pause(ctx):
+  if ctx.voice_client.is_paused():
+    await ctx.send('Error: voice are already paused.')
+  else:
+    await ctx.voice_client.stop()
+
+@bot.command()
+async def resume(ctx):
+  if ctx.voice_client.is_playing():
+    await ctx.voice_client.resume()
+  else:
+    await ctx.send('Error: voice are not paused to resume.')
+
 @play.before_invoke
 async def ensure_voice(ctx):
   if ctx.voice_client is None:
