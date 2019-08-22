@@ -17,6 +17,7 @@ ytdl = None
 p = None
 
 def prepare():
+  global p
   p = Player()
   global ytdl
   ytdl = youtube_dl.YoutubeDL(ytdl_format_options)
