@@ -48,8 +48,10 @@ class Player():
   loop = False
   
   def add(self, guild, song):
-    if (guild not in self.queue):
+    if guild not in self.queue:
       self.queue[guild] = []
+    if guild not in self.cur_song_index:
+      self.cur_song_index[guild] = 0
     self.queue[guild].append(song)
 
   def remove(self, guild, index):
