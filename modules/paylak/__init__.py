@@ -17,11 +17,11 @@ ytdl = None
 p = None
 
 def prepare():
+  p = Player()
   global ytdl
   ytdl = youtube_dl.YoutubeDL(ytdl_format_options)
   if not discord.opus.is_loaded():
     discord.opus.load_opus('opus')
-  p = Player()
   
 class Song(discord.PCMVolumeTransformer):
   def __init__(self, source, *, data, volume = 0.5):
