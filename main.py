@@ -13,19 +13,13 @@ async def on_music_update():
   while True:
     p = paylak.p
     for guild in p.queue:
-      print(2)
       if guild.voice_client:
-        print(3)
         if not guild.voice_client.is_playing():
-          print(4)
           if not p.is_playing[guild]:
-            print(5)
             if p.cur_song_index[guild] < len(p.queue[guild]):
-              print(6)
               guild.voice_client.play(p.queue[guild][p.cur_song_index[guild]])
               p.is_playing[guild] = True
           else:
-            print(7)
             p.cur_song_index[guild] += 1
             p.is_playing[guild] = False
     await asyncio.sleep(1)
