@@ -110,7 +110,7 @@ async def play(ctx, *, url):
 async def stop(ctx):
   if ctx.voice_client.is_playing():
     await ctx.voice_client.stop()
-  else
+  else:
     await ctx.send('Error: there is nothing to stop.')
 
 @bot.command()
