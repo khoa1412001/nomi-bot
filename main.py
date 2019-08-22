@@ -11,6 +11,10 @@ bot = commands.Bot(
 async def on_music_update():
   await bot.wait_until_ready()
   while True:
+    if guild.voice_client:
+      if len(guild.voice_client.channels.members) == 1:
+        await guild.voice_client.channel.disconnect()
+    
     p = paylak.p
     for guild in p.queue:
       if guild.voice_client:
@@ -19,11 +23,12 @@ async def on_music_update():
             if p.cur_song_index[guild] < len(p.queue[guild]):
               song = p.queue[guild][p.cur_song_index[guild]]
               guild.voice_client.play(song)
-              print(song.title)
               p.is_playing[guild] = True
           else:
-            p.cur_song_index[guild] += 1
+            if not p.loop[guild]:
+              p.cur_song_index[guild] += 1
             p.is_playing[guild] = False
+    
     await asyncio.sleep(1)
 
 @bot.event
@@ -95,7 +100,7 @@ async def leave(ctx):
 @bot.command()
 async def play(ctx, *, url):
   async with ctx.typing():
-    song = await paylak.Song.from_url(url, loop=bot.loop)
+    song = await paylak.Song.from_url(url, loop = bot.loop, stream = paylak.p.stream, volume = paylak.p.volume)
     paylak.p.add(ctx.guild, song)
   await ctx.send(f'Added to queue: {song.title}.')
 
@@ -103,29 +108,63 @@ async def play(ctx, *, url):
 async def stop(ctx):
   if ctx.voice_client.is_playing():
     await ctx.voice_client.stop()
+  else
+    await ctx.send('Error: there is nothing to stop.')
 
 @bot.command()
 async def pause(ctx):
-  if ctx.voice_client.is_paused():
-    await ctx.send('Error: voice are already paused.')
-  else:
-    await ctx.voice_client.stop()
+  if ctx.voice_client.is_playing():
+    if ctx.voice_client.is_paused():
+      await ctx.send('Error: voice are already paused.')
+    else:
+      await ctx.voice_client.stop()
 
 @bot.command()
 async def resume(ctx):
   if ctx.voice_client.is_playing():
-    await ctx.voice_client.resume()
+    if ctx.voice_client.is_paused():
+      await ctx.voice_client.resume()
+    else:
+      await ctx.send('Error: voice are not paused to resume.')
+
+@bot.command()
+async def skip(ctx):
+  if paylak.p.cur_song_index[ctx.guild] < len(paylak.p.queue[ctx.guild]):
+    if ctx.voice_client.is_playing():
+      await ctx.voice_client.stop()
+      if paylak.p.is_playing[ctx.guild]:
+        paylak.p.cur_song_index[ctx.guild] += 1
+        paylak.p.is_playing[ctx.guild] = False
+
+@bot.command()
+async def loop(ctx):
+  paylak.p.loop[ctx.guild] = !paylak.p.loop[ctx.guild]
+  if paylak.p.loop[ctx.guild]:
+    await ctx.send('Loop is on.')
   else:
-    await ctx.send('Error: voice are not paused to resume.')
+    await ctx.send('Loop is off.')
+
+@bot.command()
+async def stream(ctx):
+  paylak.p.stream[ctx.guild] = !paylak.p.stream[ctx.guild]
+  if paylak.p.stream[ctx.guild]:
+    await ctx.send('Stream is on.')
+  else:
+    await ctx.send('Stream is off.')
 
 @play.before_invoke
+@stop.before_invoke
+@pause.before_invoke
+@resume.before_invoke
 async def ensure_voice(ctx):
+  if not ctx.author.voice:
+    ctx.send('Error: you are not in any voice channel')
+    raise commands.CommandError('')
+  channel = ctx.author.voice.channel
   if ctx.voice_client is None:
-    if ctx.author.voice:
-      await ctx.author.voice.channel.connect()
-    else:
-      await ctx.send('Error: you are not connected to a voice channel.')
-      raise commands.CommandError('Author not connected to a voice channel.')
+    await channel.connect()
+  else:
+    await ctx.voice_client.move_to(channel)
 
 chitchat.prepare()
 water_pack.prepare()
