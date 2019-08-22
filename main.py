@@ -11,6 +11,7 @@ bot = commands.Bot(
 async def on_music_update():
   await bot.wait_until_ready()
   while True:
+
     if guild.voice_client:
       if len(guild.voice_client.channels.members) == 1:
         await guild.voice_client.channel.disconnect()
@@ -76,13 +77,14 @@ async def on_message(message):
 @bot.command()
 async def join(ctx):
   if ctx.author.voice:
-    channel = ctx.author.voice.channel.connect()
+    channel = ctx.author.voice.channel
     if ctx.voice_clien.channel is not None:
       await ctx.voice_client.move_to(channel)
       await ctx.send(f'Moved to `{channel.name}`.')
     else:
       await channel.connect()
       await ctx.send(f'Joined `{channel.name}`.')
+    paylak.p.init_guild(ctx.guild)
   else:
     await ctx.send('Error: you are not in any voice channel.')
 
@@ -100,7 +102,7 @@ async def leave(ctx):
 @bot.command()
 async def play(ctx, *, url):
   async with ctx.typing():
-    song = await paylak.Song.from_url(url, loop = bot.loop, stream = paylak.p.stream, volume = paylak.p.volume)
+    song = await paylak.Song.from_url(url, loop = bot.loop, stream = paylak.p.stream[ctx.guild], volume = paylak.p.volume[ctx.guild])
     paylak.p.add(ctx.guild, song)
   await ctx.send(f'Added to queue: {song.title}.')
 
@@ -165,6 +167,7 @@ async def ensure_voice(ctx):
     await channel.connect()
   else:
     await ctx.voice_client.move_to(channel)
+  paylak.p.init_guild(ctx.guild)
 
 chitchat.prepare()
 water_pack.prepare()
