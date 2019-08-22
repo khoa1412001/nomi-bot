@@ -8,6 +8,20 @@ bot = commands.Bot(
   command_prefix = prefix_char
 )
 
+async def on_music_update():
+  await bot.wait_until_ready()
+  p = paylak.p
+  for guild in p.queue:
+    if guild.voice_client:
+      if not guild.voice_client.is_playing():
+        if not p.is_playing[guild]:
+          if p.cur_song_index[guild] < len(p.queue[guild]):
+            guild.voice_client.play(p.queue[guild][p.cur_song_index[guild]])
+            p.is_playing[guild] = True
+        else:
+          p.cur_song_index[guild] += 1
+          p.is_playing[guild] = False
+
 @bot.event
 async def on_ready():
   await bot.change_presence(
@@ -17,6 +31,8 @@ async def on_ready():
     ),
     status = discord.Status.do_not_disturb
   )
+  loop = asyncio.get_event_loop()
+  loop.create_task(on_music_update())
 
 @bot.event
 async def on_message(message):
@@ -74,9 +90,9 @@ async def leave(ctx):
 @bot.command()
 async def play(ctx, *, url):
   async with ctx.typing():
-    player = await paylak.Song.from_url(url, loop=bot.loop)
-    ctx.voice_client.play(player)
-  await ctx.send(f'Now playing: {player.title}.')
+    song = await paylak.Song.from_url(url, loop=bot.loop, stream = paylak.p.stream, volume = paylak.p.volume)
+    paylak.p.add(ctx.guild, song)
+  await ctx.send(f'Added to queue: {player.title}.')
 
 @bot.command()
 async def stop(ctx):
