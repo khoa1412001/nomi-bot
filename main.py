@@ -18,19 +18,23 @@ async def on_music_update():
         if len(guild.voice_client.channel.members) == 1:
           await guild.voice_client.disconnect()
           continue
-    
+        
+        print(f'voice client: {guild.voice_client.is_playing()}')
         if not guild.voice_client.is_playing():
+          print('voice client playing is false')
           if not p.is_playing[guild]:
+            print('my playing is false')
             if p.cur_song_index[guild] < len(p.queue[guild]):
               song = p.queue[guild][p.cur_song_index[guild]]
               guild.voice_client.play(song)
               p.is_playing[guild] = True
           else:
+            print('my playing is true')
             if not p.loop[guild]:
               p.cur_song_index[guild] += 1
             p.is_playing[guild] = False
     
-    print(paylak.p.loop)
+    print(paylak.p.is_playing)
     await asyncio.sleep(1)
 
 @bot.event
