@@ -27,9 +27,9 @@ async def on_music_update():
               print(4)
               song = p.queue[guild][p.cur_song_index[guild]]
               print(song.title)
-              guild.voice_client.stop()
               guild.voice_client.play(song)
               p.is_playing[guild] = True
+              await asyncio.sleep(5)
           else:
             print(3)
             if not p.loop[guild]:
