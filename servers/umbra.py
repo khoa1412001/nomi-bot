@@ -1,5 +1,5 @@
 from discord.ext import commands
-import discord, asyncio, datetime, pytz
+import os, discord, asyncio, datetime, pytz
 from modules import water_pack
 
 class Umbra(commands.Cog):
