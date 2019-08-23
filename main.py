@@ -26,6 +26,8 @@ async def on_music_update():
             if p.cur_song_index[guild] < len(p.queue[guild]):
               print(4)
               song = p.queue[guild][p.cur_song_index[guild]]
+              print(song.title)
+              guild.voice_client.stop()
               guild.voice_client.play(song)
               p.is_playing[guild] = True
           else:
@@ -34,7 +36,6 @@ async def on_music_update():
               p.cur_song_index[guild] += 1
             p.is_playing[guild] = False
     
-    print(paylak.p.is_playing)
     await asyncio.sleep(1)
 
 @bot.event
@@ -114,7 +115,7 @@ async def play(ctx, *, url):
 @bot.command()
 async def stop(ctx):
   if ctx.voice_client.is_playing():
-    await ctx.voice_client.stop()
+    ctx.voice_client.stop()
   else:
     await ctx.send('Error: there is nothing to stop.')
 
@@ -124,13 +125,13 @@ async def pause(ctx):
     if ctx.voice_client.is_paused():
       await ctx.send('Error: voice are already paused.')
     else:
-      await ctx.voice_client.stop()
+      ctx.voice_client.pause()
 
 @bot.command()
 async def resume(ctx):
   if ctx.voice_client.is_playing():
     if ctx.voice_client.is_paused():
-      await ctx.voice_client.resume()
+      ctx.voice_client.resume()
     else:
       await ctx.send('Error: voice are not paused to resume.')
 
@@ -138,7 +139,7 @@ async def resume(ctx):
 async def skip(ctx):
   if paylak.p.cur_song_index[ctx.guild] < len(paylak.p.queue[ctx.guild]):
     if ctx.voice_client.is_playing():
-      await ctx.voice_client.stop()
+      ctx.voice_client.stop()
       if paylak.p.is_playing[ctx.guild]:
         paylak.p.cur_song_index[ctx.guild] += 1
         paylak.p.is_playing[ctx.guild] = False
