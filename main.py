@@ -30,6 +30,7 @@ async def on_music_update():
               p.cur_song_index[guild] += 1
             p.is_playing[guild] = False
     
+    print(paylak.p.loop)
     await asyncio.sleep(1)
 
 @bot.event
