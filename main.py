@@ -15,7 +15,7 @@ async def on_music_update():
     for guild in p.queue:
 
       if guild.voice_client:
-        if len(guild.voice_client.channels.members) == 1:
+        if len(guild.voice_client.channel.members) == 1:
           await guild.voice_client.channel.disconnect()
           continue
     
