@@ -84,7 +84,7 @@ async def on_message(message):
 async def join(ctx):
   if ctx.author.voice:
     channel = ctx.author.voice.channel
-    if ctx.voice_clien.channel is not None:
+    if ctx.voice_client.channel is not None:
       await ctx.voice_client.move_to(channel)
       await ctx.send(f'Moved to `{channel.name}`.')
     else:
@@ -174,6 +174,12 @@ async def ensure_voice(ctx):
   else:
     await ctx.voice_client.move_to(channel)
   paylak.p.init_guild(ctx.guild)
+
+
+@bot.command()
+async def test(ctx):
+  print(paylak.p.queue[ctx.guild][0])
+  ctx.voice_client.play(paylak.p.queue[ctx.guild][0])
 
 chitchat.prepare()
 water_pack.prepare()
