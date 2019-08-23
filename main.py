@@ -20,18 +20,12 @@ async def on_music_update():
           continue
         
         if not guild.voice_client.is_playing():
-          print(1)
           if not p.is_playing[guild]:
-            print(2)
             if p.cur_song_index[guild] < len(p.queue[guild]):
-              print(4)
               song = p.queue[guild][p.cur_song_index[guild]]
-              print(song.title)
               guild.voice_client.play(song)
               p.is_playing[guild] = True
-              await asyncio.sleep(5)
           else:
-            print(3)
             if not p.loop[guild]:
               p.cur_song_index[guild] += 1
             p.is_playing[guild] = False
@@ -84,7 +78,7 @@ async def on_message(message):
 async def join(ctx):
   if ctx.author.voice:
     channel = ctx.author.voice.channel
-    if ctx.voice_client.channel is not None:
+    if ctx.voice_client is not None:
       await ctx.voice_client.move_to(channel)
       await ctx.send(f'Moved to `{channel.name}`.')
     else:
@@ -174,12 +168,6 @@ async def ensure_voice(ctx):
   else:
     await ctx.voice_client.move_to(channel)
   paylak.p.init_guild(ctx.guild)
-
-
-@bot.command()
-async def test(ctx):
-  print(paylak.p.queue[ctx.guild][0])
-  ctx.voice_client.play(paylak.p.queue[ctx.guild][0])
 
 chitchat.prepare()
 water_pack.prepare()
