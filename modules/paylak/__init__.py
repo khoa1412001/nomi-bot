@@ -25,12 +25,11 @@ def prepare():
     discord.opus.load_opus('opus')
   
 class Song(discord.PCMVolumeTransformer):
-  def __init__(self, source, *, data, volume = 1.0):
+  def __init__(self, source, *, volume = 1.0, title, url, duration):
     super().__init__(source, volume)
-    self.data = data
-    self.title = data['title']
-    self.url = data['url']
-    self.duration = data['duration']
+    self.title = title
+    self.url = url
+    self.duration = duration
 
   @classmethod
   async def from_url(cls, url, *, loop = None, stream = False, volume = 1.0):
@@ -39,7 +38,7 @@ class Song(discord.PCMVolumeTransformer):
     if 'entries' in data:
       data = data['entries'][0]
     filename = data['url'] if stream else ytdl.prepare_filename(data)
-    return cls(discord.FFmpegPCMAudio(filename, options = '-vn'), data = data, volume = volume)
+    return cls(discord.FFmpegPCMAudio(filename, options = '-vn'), volume = volume, data['title], data['url'], data['duration'])
 
 class Player():
   queue = {}
@@ -73,3 +72,26 @@ class Player():
   
   def clear(self, guild):
     queue[guild] = []
+
+class MusicGuild(discord.Guild):
+  playlist = []
+  is_playing = False
+  options = {
+    'loop':False,
+    'stream':False,
+    'volume':1.0
+  }
+
+  def add(self, song):
+    for s in self.playlist:
+      if s.title == song.title:
+        return
+    self.playlist.append(song)
+
+  def remove(self, index):
+    if (index > -1) and (index < len(self.playlist)):
+      self.playlist.pop(index)
+
+  def clear(self):
+    self.playlist = []
+
