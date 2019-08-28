@@ -52,7 +52,11 @@ async def on_message(message):
 chitchat.prepare()
 water_pack.prepare()
 paylak.prepare()
+
+bot.load_extension('modules.paylak.cog')
+
 bot.load_extension('servers.nomi-host-data')
 bot.load_extension('servers.umbra')
 bot.load_extension('servers.asteria')
+
 bot.run(token)
