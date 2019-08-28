@@ -13,24 +13,23 @@ async def on_music_update():
   await bot.wait_until_ready()
   while True:
     for id in music_guilds:
-      music_guild = music_guilds[id]
-      vc = music_guild.guild.voice_client
-      if vc:
-        if len(vc.channel.members) == 1:
-          await vc.disconnect()
+      guild = music_guilds[id]
+      if guild.voice_client:
+        if len(guild.voice_client.channel.members) == 1:
+          await guild.voice_client.disconnect()
           continue
         
-        if not vc.is_playing():
-          if not music_guild.is_music_playing:
-            if music_guild.current < len(music_guild.playlist):
-              temp = music_guild.playlist[music_guild.current]
-              song = await paylak.Song.from_url(url = temp.url, loop = bot.loop, stream = music_guild.options['stream'], volume = music_guild.options['volume'])
-              vc.play(song)
-              music_guild.is_music_playing = True
+        if not guild.voice_client.is_playing():
+          if not guild.is_playing:
+            if guild.current < len(guild.playlist):
+              temp = guild.playlist[guild.current]
+              song = await paylak.Song.from_url(url = temp.url, loop = bot.loop, stream = guild.stream, volume = guild.volume)
+              guild.voice_client.play(song)
+              guild.is_playing = True
           else:
-            if not music_guild.options['loop']:
-              music_guild.current += 1
-            music_guild.is_music_playing = False
+            if not guild.loop:
+              guild.current += 1
+            guild.is_playing = False
     
     await asyncio.sleep(1)
 
@@ -107,7 +106,7 @@ async def leave(ctx):
 @bot.command()
 async def play(ctx, *, url):
   async with ctx.typing():
-    song = await paylak.Song.from_url(url, loop = bot.loop, stream = music_guilds[ctx.guild.id].options['stream'], volume = music_guilds[ctx.guild.id].options['volume'])
+    song = await paylak.Song.from_url(url, loop = bot.loop, stream = music_guilds[ctx.guild.id].stream, volume = music_guilds[ctx.guild.id].volume)
     music_guilds[ctx.guild.id].add(song)
   await ctx.send(f'Added to queue: {song.title}.')
 
@@ -136,25 +135,23 @@ async def resume(ctx):
 
 @bot.command()
 async def skip(ctx):
-  if music_guilds[ctx.guild.id].current < len(music_guilds[ctx.guild.id].playlist):
-    if ctx.voice_client.is_playing():
-      ctx.voice_client.stop()
-      if music_guilds[ctx.guild.id].is_music_playing:
-        music_guilds[ctx.guild.id].current += 1
-        music_guilds[ctx.guild.id].is_music_playing = False
+  if ctx.voice_client.is_playing():
+    ctx.voice_client.stop()
+  music_guilds[ctx.guild.id].current += 1
+  music_guilds[ctx.guild.id].is_playing = False
 
 @bot.command()
 async def loop(ctx):
-  music_guilds[ctx.guild.id].options['loop'] = not music_guilds[ctx.guild.id].options['loop']
-  if music_guilds[ctx.guild.id].options['loop']:
+  music_guilds[ctx.guild.id].loop = not music_guilds[ctx.guild.id].loop
+  if music_guilds[ctx.guild.id].loop:
     await ctx.send('Loop is on.')
   else:
     await ctx.send('Loop is off.')
 
 @bot.command()
 async def stream(ctx):
-  music_guilds[ctx.guild.id].options['stream'] = not music_guilds[ctx.guild.id].options['stream']
-  if music_guilds[ctx.guild.id].options['stream']:
+  music_guilds[ctx.guild.id].stream = not music_guilds[ctx.guild.id].stream
+  if music_guilds[ctx.guild.id].stream
     await ctx.send('Stream is on.')
   else:
     await ctx.send('Stream is off.')
