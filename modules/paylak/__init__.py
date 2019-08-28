@@ -22,22 +22,22 @@ def prepare():
     discord.opus.load_opus('opus')
   
 class Song(discord.PCMVolumeTransformer):
-  def __init__(self, source, *, volume = 1.0, title = 'error', url = 'error', duration = 'error'):
+  def __init__(self, source, *, title = 'error', url = 'error', duration = 'error'):
     if (source is not None):
-      super().__init__(source, volume)
+      super().__init__(source, volume = 1.0)
     self.title = title
     self.url = url
     self.duration = duration
 
   @classmethod
-  async def from_url(cls, url, *, loop = None, stream = False, volume = 1.0):
+  async def from_url(cls, url, *, loop = None, stream = False):
     try:
       loop = loop or asyncio.get_event_loop()
       data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download = not stream))
       if 'entries' in data:
         data = data['entries'][0]
       file = data['url'] if stream else ytdl.prepare_filename(data)
-      return cls(discord.FFmpegPCMAudio(file, options = '-vn'), volume = volume, title = data['title'], url = url, duration = data['duration'])
+      return cls(discord.FFmpegPCMAudio(file, options = '-vn'), title = data['title'], url = url, duration = data['duration'])
     except:
       return cls(None)
     
