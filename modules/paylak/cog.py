@@ -1,5 +1,5 @@
 from discord.ext import commands
-import asyncio
+import asyncio, discord
 from modules import paylak
 
 class PayLak(commands.Cog):
@@ -20,6 +20,8 @@ class PayLak(commands.Cog):
 
   async def on_music_update(self):
     await self.bot.wait_until_ready()
+    while not discord.opus.is_loaded():
+      await asyncio.sleep(1)
     while True:
       for id in self.music_guilds:
         guild = self.music_guilds[id]
@@ -65,7 +67,7 @@ class PayLak(commands.Cog):
       await ctx.send('Error: you or me are not in voice.')
 
   @commands.command()
-  async def play(self, ctx, *, url):
+  async def add(self, ctx, *, url):
     guild = self.music_guilds[ctx.guild.id]
     async with ctx.typing():
       song = await paylak.Song.from_url(url, loop = self.bot.loop, stream = guild.stream)
@@ -75,6 +77,24 @@ class PayLak(commands.Cog):
       guild.add(song)
       await ctx.send(f'Added to queue: `{song.title} [{song.duration}]`.')
 
+  @commands.command()
+  async def remove(self, ctx, *, keyword):
+    guild = self.music_guilds[ctx.guild.id]
+    if keyword[0] in ['0','1','2','3','4','5','6','7','8','9']:
+      index = int(keyword)
+      song = guild.playlist[index]
+      song.cleanup()
+      guild.remove(index)
+      await ctx.send(f'Removed from queue: `{song.title}`.')
+
+  @commands.command()
+  async def clear(self):
+    guild = self.music_guilds[ctx.guild.id]
+    for song in guild.playlist:
+      song.cleanup()
+    guild.clear()
+    await ctx.send('Cleared queue.')
+        
   @commands.command()
   async def stop(self, ctx):
     if ctx.voice_client.is_playing():
@@ -100,13 +120,26 @@ class PayLak(commands.Cog):
       await ctx.send('Error: voice are not paused to resume.')
 
   @commands.command()
-  async def skip(self, ctx):
+  async def previous(self, ctx):
     guild = self.music_guilds[ctx.guild.id]
-    guild.current += 1
+    guild.current -= 1
+    if guild.current < 0:
+      guild.current = 0
     guild.is_playing = False
     if ctx.voice_client.is_playing():
       ctx.voice_client.stop()
-    await ctx.send('Skipped.')
+    await ctx.send('Backed to previous song.')
+
+  @commands.command()
+  async def next(self, ctx):
+    guild = self.music_guilds[ctx.guild.id]
+    guild.current += 1
+    if guild.current > len(guild.playlist):
+      guild.current = len(guild.playlist)
+    guild.is_playing = False
+    if ctx.voice_client.is_playing():
+      ctx.voice_client.stop()
+    await ctx.send('Skipped to next song.')
 
   @commands.command()
   async def loop(self, ctx):
@@ -130,8 +163,11 @@ class PayLak(commands.Cog):
   async def reset(self, ctx):
     if ctx.voice_client:
       await ctx.voice_client.disconnect()
+    guild = self.music_guilds[ctx.guild.id]
+    for song in guild.playlist:
+      song.cleanup()
     self.music_guilds[ctx.guild.id] = paylak.MusicGuild(ctx.guild)
-    await ctx.send('All music data has been reset.')
+    await ctx.send('All music data on this server has been reset.')
 
   @play.before_invoke
   @stop.before_invoke
