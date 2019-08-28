@@ -22,7 +22,7 @@ def prepare():
     discord.opus.load_opus('opus')
   
 class Song(discord.PCMVolumeTransformer):
-  def __init__(self, source, *, volume = 1.0, title, url, duration):
+  def __init__(self, source, *, volume = 1.0, title = 'error', url = 'error', duration = 'error'):
     if (source is not None):
       super().__init__(source, volume)
     self.title = title
@@ -31,17 +31,16 @@ class Song(discord.PCMVolumeTransformer):
 
   @classmethod
   async def from_url(cls, url, *, loop = None, stream = False, volume = 1.0):
-    loop = loop or asyncio.get_event_loop()
-    data = None
     try:
+      loop = loop or asyncio.get_event_loop()
       data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download = not stream))
-    except Exception as e:
-      return cls(None, volume = 1.0, title = 'error', url = 'error', duration = 'error')
-    if 'entries' in data:
+      if 'entries' in data:
       data = data['entries'][0]
-    file = data['url'] if stream else ytdl.prepare_filename(data)
-    return cls(discord.FFmpegPCMAudio(file, options = '-vn'), volume = volume, title = data['title'], url = url, duration = data['duration'])
-
+      file = data['url'] if stream else ytdl.prepare_filename(data)
+      return cls(discord.FFmpegPCMAudio(file, options = '-vn'), volume = volume, title = data['title'], url = url, duration = data['duration'])
+    except:
+      return cls(None)
+    
 class MusicGuild():
   def __init__(self, guild):
     self.id = guild.id
