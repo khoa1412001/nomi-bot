@@ -43,7 +43,7 @@ class MusicGuild():
     self.voice_client = guild.voice_client
     self.playlist = []
     self.current = 0
-    self.is_playing2 = False
+    self.is_playing = False
     self.loop = False
     self.stream = False
     self.volume = 1.0
