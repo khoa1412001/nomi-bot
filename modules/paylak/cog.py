@@ -31,12 +31,9 @@ class PayLak(commands.Cog):
             if not guild.is_playing:
               if guild.current < len(guild.playlist):
                 temp = guild.playlist[guild.current]
-                if temp.url == 'error':
-                  guild.remove(guild.current)
-                else:
-                  song = await paylak.Song.from_url(url = temp.url, loop = self.bot.loop, stream = guild.stream, volume = guild.volume)
-                  guild.master.voice_client.play(song)
-                  guild.is_playing = True
+                song = await paylak.Song.from_url(url = temp.url, loop = self.bot.loop, stream = guild.stream, volume = guild.volume)
+                guild.master.voice_client.play(song)
+                guild.is_playing = True
             else:
               if not guild.loop:
                 guild.current += 1
@@ -72,8 +69,11 @@ class PayLak(commands.Cog):
     guild = self.music_guilds[ctx.guild.id]
     async with ctx.typing():
       song = await paylak.Song.from_url(url, loop = self.bot.loop, stream = guild.stream, volume = guild.volume)
-    guild.add(song)
-    await ctx.send(f'Added to queue: `{song.title} [{song.duration}]`.')
+    if song.url == 'error':
+      await ctx.send('Error: no song found or broken link.')
+    else:
+      guild.add(song)
+      await ctx.send(f'Added to queue: `{song.title} [{song.duration}]`.')
 
   @commands.command()
   async def stop(self, ctx):
