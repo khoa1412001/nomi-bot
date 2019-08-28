@@ -10,8 +10,7 @@ ytdl_format_options = {
     'logtostderr': False,
     'quiet': True,
     'no_warnings': True,
-    'default_search': 'auto',
-    'source_address': '0.0.0.0'
+    'default_search': 'ytsearch',
 }
 ytdl = None
 
@@ -58,7 +57,7 @@ class MusicGuild():
         return
     self.playlist.append(song)
 
-  def remove(self, index):
+  def remove_at(self, index):
     if (index > -1) and (index < len(self.playlist)):
       self.playlist.pop(index)
 
