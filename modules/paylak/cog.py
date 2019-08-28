@@ -31,7 +31,7 @@ class PayLak(commands.Cog):
             if not guild.is_playing:
               if guild.current < len(guild.playlist):
                 temp = guild.playlist[guild.current]
-                song = await paylak.Song.from_url(url = temp.url, loop = bot.loop, stream = guild.stream, volume = guild.volume)
+                song = await paylak.Song.from_url(url = temp.url, loop = self.bot.loop, stream = guild.stream, volume = guild.volume)
                 guild.master.voice_client.play(song)
                 guild.is_playing = True
             else:
@@ -68,7 +68,7 @@ class PayLak(commands.Cog):
   async def play(self, ctx, *, url):
     guild = self.music_guilds[ctx.guild.id]
     async with ctx.typing():
-      song = await paylak.Song.from_url(url, loop = bot.loop, stream = guild.stream, volume = guild.volume)
+      song = await paylak.Song.from_url(url, loop = self.bot.loop, stream = guild.stream, volume = guild.volume)
     guild.add(song)
     await ctx.send(f'Added to queue: `{song.title} [{song.duration}]`.')
 
