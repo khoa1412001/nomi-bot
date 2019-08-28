@@ -127,7 +127,7 @@ class PayLak(commands.Cog):
   async def reset(self, ctx):
     if ctx.voice_client:
       await ctx.voice_client.disconnect()
-    self.music_guilds[ctx.guild.id] = paylak.MusicGuild(guild)
+    self.music_guilds[ctx.guild.id] = paylak.MusicGuild(ctx.guild)
     await ctx.send('All music data has been reset.')
 
   @play.before_invoke
