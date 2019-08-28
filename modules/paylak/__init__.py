@@ -35,7 +35,8 @@ class Song(discord.PCMVolumeTransformer):
     if 'entries' in data:
       data = data['entries'][0]
     filename = data['url'] if stream else ytdl.prepare_filename(data)
-    return cls(discord.FFmpegPCMAudio(filename, options = '-vn'), volume = volume, title = data['title'], url = data['url'], duration = data['duration'])
+    print(data)
+    return cls(discord.FFmpegPCMAudio(filename, options = '-vn'), volume = volume, title = data['title'], url = data['url'], duration = 5)
 
 class MusicGuild():
   id = None
