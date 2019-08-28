@@ -7,28 +7,29 @@ prefix_char = '#'
 bot = commands.Bot(
   command_prefix = prefix_char
 )
+music_guilds = {}
 
 async def on_music_update():
   await bot.wait_until_ready()
   while True:
-    p = paylak.p
-    for guild in p.queue:
-
+    for id in music_guilds:
+      guild = music_guilds[id]
       if guild.voice_client:
         if len(guild.voice_client.channel.members) == 1:
           await guild.voice_client.disconnect()
           continue
         
         if not guild.voice_client.is_playing():
-          if not p.is_playing[guild]:
-            if p.cur_song_index[guild] < len(p.queue[guild]):
-              song = p.queue[guild][p.cur_song_index[guild]]
+          if not guild.is_music_playing:
+            if guild.current < len(guild.playlist):
+              temp = guild.playlist[guild.current]
+              song = await paylak.Song.from_url(url, loop = bot.loop, stream = guild.stream, guild.volume)
               guild.voice_client.play(song)
-              p.is_playing[guild] = True
+              guild.is_music_playing = True
           else:
-            if not p.loop[guild]:
-              p.cur_song_index[guild] += 1
-            p.is_playing[guild] = False
+            if not guild.loop:
+              guild.current += 1
+            guild.is_music_playing = False
     
     await asyncio.sleep(1)
 
@@ -41,6 +42,9 @@ async def on_ready():
     ),
     status = discord.Status.do_not_disturb
   )
+  global music_guilds
+  for guild in bot.guilds:
+    music_guilds[guild.id] = paylak.MusicGuild(guild)
   loop = asyncio.get_event_loop()
   loop.create_task(on_music_update())
 
@@ -102,8 +106,8 @@ async def leave(ctx):
 @bot.command()
 async def play(ctx, *, url):
   async with ctx.typing():
-    song = await paylak.Song.from_url(url, loop = bot.loop, stream = paylak.p.stream[ctx.guild], volume = paylak.p.volume[ctx.guild])
-    paylak.p.add(ctx.guild, song)
+    song = await paylak.Song.from_url(url, loop = bot.loop, stream = music_guilds[ctx.guild.id].stream, volume = music_guilds[ctx.guild.id].volume)
+    music_guilds[ctx.guild.id].add(song)
   await ctx.send(f'Added to queue: {song.title}.')
 
 @bot.command()
@@ -131,25 +135,25 @@ async def resume(ctx):
 
 @bot.command()
 async def skip(ctx):
-  if paylak.p.cur_song_index[ctx.guild] < len(paylak.p.queue[ctx.guild]):
+  if music_guilds[ctx.guild.id].current < len(music_guilds[ctx.guild.id].playlist):
     if ctx.voice_client.is_playing():
       ctx.voice_client.stop()
-      if paylak.p.is_playing[ctx.guild]:
-        paylak.p.cur_song_index[ctx.guild] += 1
-        paylak.p.is_playing[ctx.guild] = False
+      if music_guilds[ctx.guild.id].is_music_playing:
+        music_guilds[ctx.guild.id].current += 1
+        music_guilds[ctx.guild.id].is_music_playing = False
 
 @bot.command()
 async def loop(ctx):
-  paylak.p.loop[ctx.guild] = not paylak.p.loop[ctx.guild]
-  if paylak.p.loop[ctx.guild]:
+  music_guilds[ctx.guild.id].loop = not music_guilds[ctx.guild.id].loop
+  if music_guilds[ctx.guild.id].loop:
     await ctx.send('Loop is on.')
   else:
     await ctx.send('Loop is off.')
 
 @bot.command()
 async def stream(ctx):
-  paylak.p.stream[ctx.guild] = not paylak.p.stream[ctx.guild]
-  if paylak.p.stream[ctx.guild]:
+  music_guilds[ctx.guild.id].stream = not music_guilds[ctx.guild.id].stream
+  if music_guilds[ctx.guild.id].stream:
     await ctx.send('Stream is on.')
   else:
     await ctx.send('Stream is off.')
@@ -167,7 +171,6 @@ async def ensure_voice(ctx):
     await channel.connect()
   else:
     await ctx.voice_client.move_to(channel)
-  paylak.p.init_guild(ctx.guild)
 
 chitchat.prepare()
 water_pack.prepare()
