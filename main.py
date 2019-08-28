@@ -24,11 +24,11 @@ async def on_music_update():
           if not music_guild.is_music_playing:
             if music_guild.current < len(music_guild.playlist):
               temp = music_guild.playlist[music_guild.current]
-              song = await paylak.Song.from_url(url = temp.url, loop = bot.loop, stream = music_guild.stream, volume = music_guild.volume)
+              song = await paylak.Song.from_url(url = temp.url, loop = bot.loop, stream = music_guild.options['stream'], volume = music_guild.options['volume'])
               vc.play(song)
               music_guild.is_music_playing = True
           else:
-            if not music_guild.loop:
+            if not music_guild.options['loop']:
               music_guild.current += 1
             music_guild.is_music_playing = False
     
@@ -107,7 +107,7 @@ async def leave(ctx):
 @bot.command()
 async def play(ctx, *, url):
   async with ctx.typing():
-    song = await paylak.Song.from_url(url, loop = bot.loop, stream = music_guilds[ctx.guild.id].stream, volume = music_guilds[ctx.guild.id].volume)
+    song = await paylak.Song.from_url(url, loop = bot.loop, stream = music_guilds[ctx.guild.id].options['stream'], volume = music_guilds[ctx.guild.id].options['volume'])
     music_guilds[ctx.guild.id].add(song)
   await ctx.send(f'Added to queue: {song.title}.')
 
@@ -145,16 +145,16 @@ async def skip(ctx):
 
 @bot.command()
 async def loop(ctx):
-  music_guilds[ctx.guild.id].loop = not music_guilds[ctx.guild.id].loop
-  if music_guilds[ctx.guild.id].loop:
+  music_guilds[ctx.guild.id].options['loop'] = not music_guilds[ctx.guild.id].options['loop']
+  if music_guilds[ctx.guild.id].options['loop']:
     await ctx.send('Loop is on.')
   else:
     await ctx.send('Loop is off.')
 
 @bot.command()
 async def stream(ctx):
-  music_guilds[ctx.guild.id].stream = not music_guilds[ctx.guild.id].stream
-  if music_guilds[ctx.guild.id].stream:
+  music_guilds[ctx.guild.id].options['stream'] = not music_guilds[ctx.guild.id].options['stream']
+  if music_guilds[ctx.guild.id].options['stream']:
     await ctx.send('Stream is on.')
   else:
     await ctx.send('Stream is off.')
