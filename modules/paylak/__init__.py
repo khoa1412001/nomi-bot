@@ -14,11 +14,8 @@ ytdl_format_options = {
     'source_address': '0.0.0.0'
 }
 ytdl = None
-p = None
 
 def prepare():
-  global p
-  p = Player()
   global ytdl
   ytdl = youtube_dl.YoutubeDL(ytdl_format_options)
   if not discord.opus.is_loaded():
@@ -39,39 +36,6 @@ class Song(discord.PCMVolumeTransformer):
       data = data['entries'][0]
     filename = data['url'] if stream else ytdl.prepare_filename(data)
     return cls(discord.FFmpegPCMAudio(filename, options = '-vn'), volume = volume, data['title], data['url'], data['duration'])
-
-class Player():
-  queue = {}
-  cur_song_index = {}
-  is_playing = {}
-  loop = {}
-  stream = {}
-  volume = {}
-
-  def init_guild(self, guild):
-    if guild not in self.queue:
-      self.queue[guild] = []
-    if guild not in self.cur_song_index:
-      self.cur_song_index[guild] = 0
-    if guild not in self.is_playing:
-      self.is_playing[guild] = False 
-    if guild not in self.loop:
-      self.loop[guild] = False
-    if guild not in self.stream:
-      self.stream[guild] = False
-    if guild not in self.volume:
-      self.volume[guild] = 1.0
-  
-  def add(self, guild, song):
-    self.queue[guild].append(song)
-
-  def remove(self, guild, index):
-    if (guild in queue):
-      if (index > -1) and (index < len(queue[guild])):
-        self.queue[guild].pop(index)
-  
-  def clear(self, guild):
-    queue[guild] = []
 
 class MusicGuild(discord.Guild):
   playlist = []
