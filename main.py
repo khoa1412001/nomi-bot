@@ -14,17 +14,18 @@ async def on_music_update():
   while True:
     for id in music_guilds:
       guild = music_guilds[id]
-      if guild.voice_client:
-        if len(guild.voice_client.channel.members) == 1:
-          await guild.voice_client.disconnect()
+      vc = guild.guild().voice_client
+      if vc:
+        if len(vc.channel.members) == 1:
+          await vc.disconnect()
           continue
         
-        if not guild.voice_client.is_playing():
+        if not vc.is_playing():
           if not guild.is_music_playing:
             if guild.current < len(guild.playlist):
               temp = guild.playlist[guild.current]
               song = await paylak.Song.from_url(url = temp.url, loop = bot.loop, stream = guild.stream, volume = guild.volume)
-              guild.voice_client.play(song)
+              vc.play(song)
               guild.is_music_playing = True
           else:
             if not guild.loop:
