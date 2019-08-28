@@ -35,7 +35,7 @@ class Song(discord.PCMVolumeTransformer):
       loop = loop or asyncio.get_event_loop()
       data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download = not stream))
       if 'entries' in data:
-      data = data['entries'][0]
+        data = data['entries'][0]
       file = data['url'] if stream else ytdl.prepare_filename(data)
       return cls(discord.FFmpegPCMAudio(file, options = '-vn'), volume = volume, title = data['title'], url = url, duration = data['duration'])
     except:
