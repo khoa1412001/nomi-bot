@@ -171,7 +171,7 @@ class PayLak(commands.Cog):
 
   @add.before_invoke
   @remove.before_invoke
-  @previois.before_invoke
+  @previous.before_invoke
   @next.before_invoke
   @stop.before_invoke
   @pause.before_invoke
