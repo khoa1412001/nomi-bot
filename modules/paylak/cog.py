@@ -31,7 +31,7 @@ class PayLak(commands.Cog):
             if not guild.is_playing:
               if guild.current < len(guild.playlist):
                 temp = guild.playlist[guild.current]
-                if temp.url == 'error:
+                if temp.url == 'error':
                   guild.remove(guild.current)
                 else:
                   song = await paylak.Song.from_url(url = temp.url, loop = self.bot.loop, stream = guild.stream, volume = guild.volume)
