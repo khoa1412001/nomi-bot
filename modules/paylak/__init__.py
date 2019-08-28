@@ -50,6 +50,9 @@ class MusicGuild():
 
   def __init__(self, guild):
     self.id = guild.id
+ 
+  def guild(self):
+    return discord.Object(self.id)
 
   def add(self, song):
     for s in self.playlist:
