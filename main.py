@@ -23,7 +23,7 @@ async def on_music_update():
           if not guild.is_music_playing:
             if guild.current < len(guild.playlist):
               temp = guild.playlist[guild.current]
-              song = await paylak.Song.from_url(url, loop = bot.loop, stream = guild.stream, guild.volume)
+              song = await paylak.Song.from_url(temp.url, loop = bot.loop, stream = guild.stream, guild.volume)
               guild.voice_client.play(song)
               guild.is_music_playing = True
           else:
