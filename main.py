@@ -45,7 +45,7 @@ async def on_ready():
   )
   global music_guilds
   for guild in bot.guilds:
-    music_guilds[guild.id] = paylak.MusicGuild(guild)
+    music_guilds[guild.id] = paylak.MusicGuild(guild, bot)
   loop = asyncio.get_event_loop()
   loop.create_task(on_music_update())
 
