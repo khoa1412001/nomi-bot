@@ -31,7 +31,7 @@ class PayLak(commands.Cog):
             if not guild.is_playing:
               if guild.current < len(guild.playlist):
                 temp = guild.playlist[guild.current]
-                song = await paylak.Song.from_url(url = temp.url, loop = self.bot.loop, stream = guild.stream, volume = guild.volume)
+                song = await paylak.Song.from_url(url = temp.url, loop = self.bot.loop, stream = guild.stream)
                 guild.master.voice_client.play(song)
                 guild.is_playing = True
             else:
@@ -68,7 +68,7 @@ class PayLak(commands.Cog):
   async def play(self, ctx, *, url):
     guild = self.music_guilds[ctx.guild.id]
     async with ctx.typing():
-      song = await paylak.Song.from_url(url, loop = self.bot.loop, stream = guild.stream, volume = guild.volume)
+      song = await paylak.Song.from_url(url, loop = self.bot.loop, stream = guild.stream)
     if song.url == 'error':
       await ctx.send('Error: no song found or broken link.')
     else:
@@ -79,6 +79,7 @@ class PayLak(commands.Cog):
   async def stop(self, ctx):
     if ctx.voice_client.is_playing():
       ctx.voice_client.stop()
+      await ctx.send('Stopped.')
     else:
       await ctx.send('Error: there is nothing to stop.')
 
@@ -88,21 +89,23 @@ class PayLak(commands.Cog):
       await ctx.send('Error: voice are already paused.')
     else:
       ctx.voice_client.pause()
+      await ctx.send('Paused.')
 
   @commands.command()
   async def resume(self, ctx):
     if ctx.voice_client.is_paused():
       ctx.voice_client.resume()
+      await ctx.send('Resumed.')
     else:
       await ctx.send('Error: voice are not paused to resume.')
 
   @commands.command()
   async def skip(self, ctx):
-    if ctx.voice_client.is_playing():
-      ctx.voice_client.stop()
     guild = self.music_guilds[ctx.guild.id]
     guild.current += 1
     guild.is_playing = False
+    if ctx.voice_client.is_playing():
+      ctx.voice_client.stop()
     await ctx.send('Skipped.')
 
   @commands.command()
