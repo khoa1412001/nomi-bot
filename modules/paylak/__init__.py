@@ -40,7 +40,7 @@ class Song(discord.PCMVolumeTransformer):
 class MusicGuild():
   def __init__(self, guild):
     self.id = guild.id
-    self.voice_client = guild.voice_client
+    self.master = guild
     self.playlist = []
     self.current = 0
     self.is_playing = False
