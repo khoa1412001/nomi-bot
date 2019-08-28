@@ -37,14 +37,19 @@ class Song(discord.PCMVolumeTransformer):
     filename = data['url'] if stream else ytdl.prepare_filename(data)
     return cls(discord.FFmpegPCMAudio(filename, options = '-vn'), volume = volume, data['title], data['url'], data['duration'])
 
-class MusicGuild(discord.Guild):
+class MusicGuild():
+  id = None
   playlist = []
+  current = 0
   is_music_playing = False
   options = {
     'loop':False,
     'stream':False,
     'volume':1.0
   }
+
+  def __init__(self, guild):
+    self.id = guild.id
 
   def add(self, song):
     for s in self.playlist:
