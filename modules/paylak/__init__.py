@@ -39,7 +39,7 @@ class Song(discord.PCMVolumeTransformer):
 
 class MusicGuild(discord.Guild):
   playlist = []
-  is_playing = False
+  is_music_playing = False
   options = {
     'loop':False,
     'stream':False,
