@@ -38,19 +38,15 @@ class Song(discord.PCMVolumeTransformer):
     return cls(discord.FFmpegPCMAudio(filename, options = '-vn'), volume = volume, title = data['title'], url = url, duration = data['duration'])
 
 class MusicGuild():
-  id = None
-  playlist = []
-  current = 0
-  is_music_playing = False
-  options = {
-    'loop':False,
-    'stream':False,
-    'volume':1.0
-  }
-
   def __init__(self, guild):
     self.id = guild.id
-    self.guild = guild
+    self.voice_client = guild.voice_client
+    self.playlist = []
+    self.current = 0
+    self.is_playing2 = False
+    self.loop = False
+    self.stream = False
+    self.volume = 1.0
 
   def add(self, song):
     for s in self.playlist:
