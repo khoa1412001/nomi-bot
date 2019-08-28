@@ -151,7 +151,7 @@ async def loop(ctx):
 @bot.command()
 async def stream(ctx):
   music_guilds[ctx.guild.id].stream = not music_guilds[ctx.guild.id].stream
-  if music_guilds[ctx.guild.id].stream
+  if music_guilds[ctx.guild.id].stream:
     await ctx.send('Stream is on.')
   else:
     await ctx.send('Stream is off.')
