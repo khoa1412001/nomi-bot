@@ -48,15 +48,9 @@ class MusicGuild():
     'volume':1.0
   }
 
-  def __init__(self, guild, bot):
+  def __init__(self, guild):
     self.id = guild.id
-    slef.bot = bot
- 
-  def get_guild(self):
-    guilds = self.bot.guilds
-    for guild in guilds:
-      if guild.id == self.id:
-        return guild
+    self.guild = guild
 
   def add(self, song):
     for s in self.playlist:
