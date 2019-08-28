@@ -165,7 +165,7 @@ async def stream(ctx):
 @resume.before_invoke
 async def ensure_voice(ctx):
   if not ctx.author.voice:
-    ctx.send('Error: you are not in any voice channel')
+    await ctx.send('Error: you are not in any voice channel')
     raise commands.CommandError('')
   channel = ctx.author.voice.channel
   if ctx.voice_client is None:
