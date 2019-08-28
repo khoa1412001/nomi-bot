@@ -169,7 +169,10 @@ class PayLak(commands.Cog):
     self.music_guilds[ctx.guild.id] = paylak.MusicGuild(ctx.guild)
     await ctx.send('All music data on this server has been reset.')
 
-  @play.before_invoke
+  @add.before_invoke
+  @remove.before_invoke
+  @previois.before_invoke
+  @next.before_invoke
   @stop.before_invoke
   @pause.before_invoke
   @resume.before_invoke
