@@ -26,7 +26,12 @@ class Song(discord.PCMVolumeTransformer):
       super().__init__(source, volume = 1.0)
     self.title = title
     self.url = url
-    self.duration = duration
+    self.duration = self.friendly_duration(duration)
+
+  def friendly_duration(self, duration):
+    m, s = divmod(duration, 60)
+    h, m = divmod(m, 60)
+    return f'{h:d}:{m:02d}:{s:02d}'
 
   @classmethod
   async def from_url(cls, url, *, loop = None, stream = False):
