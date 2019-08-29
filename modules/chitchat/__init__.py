@@ -72,7 +72,7 @@ class Logic():
         self.give_point(req_key, 1.0)   
       else:
         for similar_word in all_similars:
-          if (word in all_similars[similar_word]) and (similar_word in all_reqs[key]):
+          if (word in all_similars[similar_word]) and (similar_word in all_reqs[req_key]):
             self.give_point(req_key, 0.8)
 
   def parse_sentence(self, sentence):
