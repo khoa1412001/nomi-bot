@@ -23,6 +23,11 @@ async def on_message(message):
   if (message.content.startswith(prefix_char)):
     await bot.process_commands(message)
 
+@bot.command()
+async def empty(ctx)
+  async for message in ctx.channel.history(limit = None):
+    await message.delete()
+
 chitchat.prepare()
 water_pack.prepare()
 paylak.prepare()
