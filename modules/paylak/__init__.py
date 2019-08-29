@@ -31,6 +31,8 @@ class Song(discord.PCMVolumeTransformer):
   def friendly_duration(self, duration):
     m, s = divmod(duration, 60)
     h, m = divmod(m, 60)
+    if h == 0:
+      return f'{m:02d}:{s:02d}'
     return f'{h:d}:{m:02d}:{s:02d}'
 
   @classmethod
