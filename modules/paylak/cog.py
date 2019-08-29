@@ -52,7 +52,8 @@ class PayLak(commands.Cog):
       index = 0
       text = ''
       for song in guild.playlist:
-        text += f'[{index}] song.title [{song.duration}]\n'
+        text += f'[{index}] {song.title} [{song.duration}]\n'
+        index += 1
       text = '```\n' + text + '```'
       await ctx.send(text)
     else:
@@ -101,11 +102,11 @@ class PayLak(commands.Cog):
       index = int(keyword)
       song = guild.playlist[index]
       song.cleanup()
-      guild.remove(index)
+      guild.remove_at(index)
       await ctx.send(f'Removed from queue: `{song.title}`.')
 
   @commands.command(aliases = ['removeall'])
-  async def clear(self):
+  async def clear(self, ctx):
     guild = self.music_guilds[ctx.guild.id]
     for song in guild.playlist:
       song.cleanup()
