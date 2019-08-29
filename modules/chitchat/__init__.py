@@ -67,16 +67,16 @@ class Logic():
   def parse_word(self, word):
     if word[-1] in [',','.','?','!',';',':','"','\'']:
       word = word[:-1]
-    for req_key in all_reqs:
-      req_data = all_reqs[req_key]
-      if word in req_data:
-        self.give_point(req_key, 1.0)
+    for key in all_similars:
+      if word in all_similars[key]:
+        word = key
+    for key in all_reqs:
+      if word in all_reqs[key]:
+        self.give_point(req_key, 1.0)   
       else:
-        if word in all_similars:
-          similar_words = all_similars[word]
-          for similar_word in similar_words:
-            if similar_word in req_data:
-              self.give_point(req_key, 0.8)
+        for similar_word in all_similars:
+          if (word in all_similars[similar_word]) and (similar_word in all_reqs[key]):
+            self.give_point(req_key, 0.8)
 
   def parse_sentence(self, sentence):
     words = self.request.lower().split()
