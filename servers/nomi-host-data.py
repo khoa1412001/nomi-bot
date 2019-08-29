@@ -8,7 +8,7 @@ class NomiHostData(commands.Cog):
     self.my_guild = None
     self.my_channels = {}
 
-  def find_channels(self):
+  def find_objects(self):
     guilds = self.bot.guilds
     for guild in guilds:
       if (guild.name == 'nomi-host-data'):
@@ -20,7 +20,7 @@ class NomiHostData(commands.Cog):
 
   @commands.Cog.listener()
   async def on_ready(self):
-    self.find_channels()
+    self.find_objects()
     now = datetime.datetime.now(pytz.timezone('Asia/Ho_Chi_Minh')).strftime("%Y-%m-%d %H:%M:%S")
     str = (
       '```[INFO]```'
