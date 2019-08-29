@@ -49,7 +49,7 @@ class MusicGuild():
     self.current = 0
     self.is_playing = False
     self.loop = False
-    self.stream = False
+    self.stream = True
     self.volume = 1.0
 
   def add(self, song):
