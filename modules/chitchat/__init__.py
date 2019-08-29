@@ -87,9 +87,11 @@ class Logic():
     return ' '.join(text.split())
 
   def parse_counts(self):
+    print(counts)
     for key in self.counts:
       value = self.counts[key] / len(all_reqs[key])
       self.counts[key] = round(value, 4)
+    print(counts)
     max_count = 0
     for key in self.counts:
       if self.counts[key] > max_count:
