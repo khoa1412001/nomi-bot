@@ -4,7 +4,6 @@ all_reqs = {}
 all_ress = {}
 req_to_res = {}
 all_similars = {}
-ready = False
 
 def read_requests():
   global all_reqs
@@ -59,22 +58,13 @@ def prepare():
   read_responses()
   read_request_to_response()
   read_similars()
-  global ready
-  ready = True
 
 class Logic():
-  request = ''
-  response = ''
-  counts = {}
-
   def __init__(self, req):
-    global ready
-    if (ready):
-      self.parse_sentence(req)
-      if (self.response == 'not found response'):
-        print('An no-response logic has been occurred.')
-    else:
-      print('The external resources is not readied for parsing logic.')
+    self.request = self.remove_mention_and_space(req)
+    self.response = 'not found response'
+    self.counts = {}
+    self.parse_sentence(self.request)
 
   def remove_mention_and_space(self, text):
     words = text.split()
@@ -87,11 +77,9 @@ class Logic():
     return ' '.join(text.split())
 
   def parse_counts(self):
-    print(self.counts)
     for key in self.counts:
       value = self.counts[key] / len(all_reqs[key])
       self.counts[key] = round(value, 4)
-    print(self.counts)
     max_count = 0
     for key in self.counts:
       if self.counts[key] > max_count:
@@ -126,9 +114,6 @@ class Logic():
               self.give_point(req_key, 0.8)
 
   def parse_sentence(self, sentence):
-    self.request = self.remove_mention_and_space(sentence)
-    self.response = 'not found response'
-    self.count = {}
     words = self.request.lower().split()
     for word in words:
         self.parse_word(word)
