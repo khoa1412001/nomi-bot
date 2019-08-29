@@ -104,7 +104,7 @@ class PayLak(commands.Cog):
       guild.remove(index)
       await ctx.send(f'Removed from queue: `{song.title}`.')
 
-  @commands.command(aliases = ['clean', 'removeall'])
+  @commands.command(aliases = ['removeall'])
   async def clear(self):
     guild = self.music_guilds[ctx.guild.id]
     for song in guild.playlist:
