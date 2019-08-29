@@ -25,6 +25,7 @@ class NomiHostData(commands.Cog):
     str = (
       '```[INFO]```'
       f'Logged as: {self.bot.user.name}#{self.bot.user.discriminator}\n'
+      f'OS: {platform.platform()}\n
       f'Python: {platform.python_version()}\n'
       f'Discord py: {discord.__version__}\n'
       f'Built date: {now}\n'
