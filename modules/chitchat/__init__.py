@@ -67,8 +67,8 @@ class Logic():
   def parse_word(self, word):
     if word[-1] in [',','.','?','!',';',':','"','\'']:
       word = word[:-1]
-    for key in all_reqs:
-      if word in all_reqs[key]:
+    for req_key in all_reqs:
+      if word in all_reqs[req_key]:
         self.give_point(req_key, 1.0)   
       else:
         for similar_word in all_similars:
