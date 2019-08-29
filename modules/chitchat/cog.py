@@ -11,7 +11,7 @@ class ChitChat(commands.Cog):
     cog = self.bot.get_cog('NomiHostData')
     self.log_channel = cog.my_channels['chitchat']
  
-  def log(self, text):
+  async def log(self, text):
     if self.log_channel is not None:
       await self.log_channel.send(text)
 
@@ -36,7 +36,7 @@ class ChitChat(commands.Cog):
           f'response: {logic.response}\n'
           f'counts: {logic.counts}\n'
         )
-        self.log(str)
+        await self.log(str)
 
 def setup(bot):
   bot.add_cog(ChitChat(bot))
