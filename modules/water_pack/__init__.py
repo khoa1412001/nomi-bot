@@ -21,18 +21,15 @@ def prepare():
   o = Ocean()
 
 class River():
-  name = ''
-  data = []
-  
   def __init__(self, name):
     self.name = name
+    self.data = []
     self.load(name)
 
   def load(self, name):
     f = open(f'modules/water_pack/resources/{name}.nomi', 'r')
     urls = f.readlines()
     f.close()
-    self.data = []
     for url in urls:
       self.data.append(url[:-1])
 
@@ -40,10 +37,8 @@ class River():
     return random.choice(self.data)
 
 class Ocean():
-  data = []
-
   def __init__(self):
-    global packs
+    self.data = []
     for pack_name in packs:
       self.data.append(River(pack_name))
   
