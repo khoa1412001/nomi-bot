@@ -55,7 +55,7 @@ class PayLak(commands.Cog):
         text += f'[{index}] song.title [{song.duration}]\n'
       text = '```\n' + text + '```'
       await ctx.send(text)
-    else
+    else:
       await ctx.send('There is no song in queue now.')
 
   @commands.command()
