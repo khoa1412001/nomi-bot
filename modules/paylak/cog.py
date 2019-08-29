@@ -22,6 +22,7 @@ class PayLak(commands.Cog):
     await self.bot.wait_until_ready()
     while not discord.opus.is_loaded():
       await asyncio.sleep(1)
+    print('opus is loaded')
     while True:
       for id in self.music_guilds:
         guild = self.music_guilds[id]
@@ -35,12 +36,27 @@ class PayLak(commands.Cog):
                 temp = guild.playlist[guild.current]
                 song = await paylak.Song.from_url(url = temp.url, loop = self.bot.loop, stream = guild.stream)
                 guild.master.voice_client.play(song)
+                if guild.text_channel is not None:
+                  await guild.text_channel.send(f'Now playing `{song.title}`.')
                 guild.is_playing = True
             else:
               if not guild.loop:
                 guild.current += 1
               guild.is_playing = False
       await asyncio.sleep(2)
+
+  @commands.command(aliases = ['q', 'playlist', 'list'])
+  async def queue(self, ctx):
+    guild = self.music_guilds[ctx.guild.id]
+    if len(guild.playlist) > 0:
+      index = 0
+      text = ''
+      for song in guild.playlist:
+        text += f'[{index}] song.title [{song.duration}]\n'
+      text = '```\n' + text + '```'
+      await ctx.send(text)
+    else
+      await ctx.send('There is no song in queue now.')
 
   @commands.command()
   async def join(self, ctx):
@@ -66,7 +82,7 @@ class PayLak(commands.Cog):
     else:
       await ctx.send('Error: you or me are not in voice.')
 
-  @commands.command()
+  @commands.command(aliases = ['play', 'p'])
   async def add(self, ctx, *, url):
     guild = self.music_guilds[ctx.guild.id]
     async with ctx.typing():
@@ -76,8 +92,9 @@ class PayLak(commands.Cog):
     else:
       guild.add(song)
       await ctx.send(f'Added to queue: `{song.title} [{song.duration}]`.')
+      guild.text_channel = ctx.channel
 
-  @commands.command()
+  @commands.command(aliases = ['delete'])
   async def remove(self, ctx, *, keyword):
     guild = self.music_guilds[ctx.guild.id]
     if keyword[0] in ['0','1','2','3','4','5','6','7','8','9']:
@@ -87,7 +104,7 @@ class PayLak(commands.Cog):
       guild.remove(index)
       await ctx.send(f'Removed from queue: `{song.title}`.')
 
-  @commands.command()
+  @commands.command(aliases = ['clean', 'removeall'])
   async def clear(self):
     guild = self.music_guilds[ctx.guild.id]
     for song in guild.playlist:
@@ -119,7 +136,7 @@ class PayLak(commands.Cog):
     else:
       await ctx.send('Error: voice are not paused to resume.')
 
-  @commands.command()
+  @commands.command(aliases = ['back'])
   async def previous(self, ctx):
     guild = self.music_guilds[ctx.guild.id]
     guild.current -= 1
@@ -130,7 +147,7 @@ class PayLak(commands.Cog):
       ctx.voice_client.stop()
     await ctx.send('Backed to previous song.')
 
-  @commands.command()
+  @commands.command(aliases = ['skip', 'forward'])
   async def next(self, ctx):
     guild = self.music_guilds[ctx.guild.id]
     guild.current += 1
@@ -146,20 +163,20 @@ class PayLak(commands.Cog):
     guild = self.music_guilds[ctx.guild.id]
     guild.loop = not guild.loop
     if guild.loop:
-      await ctx.send('Loop is `on`.')
+      await ctx.send('Loop is on.')
     else:
-      await ctx.send('Loop is `off`.')
+      await ctx.send('Loop is off.')
 
   @commands.command()
   async def stream(self, ctx):
     guild = self.music_guilds[ctx.guild.id]
     guild.stream = not guild.stream
     if guild.stream:
-      await ctx.send('Stream is `on`.')
+      await ctx.send('Stream is on.')
     else:
-      await ctx.send('Stream is `off`.')
+      await ctx.send('Stream is off.')
 
-  @commands.command()
+  @commands.command(aliases = ['clean', 'restart'])
   async def reset(self, ctx):
     if ctx.voice_client:
       await ctx.voice_client.disconnect()
