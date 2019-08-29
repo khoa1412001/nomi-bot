@@ -5,59 +5,24 @@ all_ress = {}
 req_to_res = {}
 all_similars = {}
 
-def read_requests():
-  global all_reqs
-  f = open('modules/chitchat/resources/requests.nomi', 'r')
+def read(name):
+  f = open(f'modules/chitchat/resources/{name}.nomi', 'r')
   lines = f.readlines()
   f.close()
+  dic = {}
   for line in lines:
-    line = line[:-1]
-    str_split = line.split('::')
-    key = str_split[0]
-    value = str_split[1].split('||')
-    all_reqs[key] = value
-
-def read_responses():
-  global all_ress
-  f = open('modules/chitchat/resources/responses.nomi', 'r')
-  lines = f.readlines()
-  f.close()
-  for line in lines:
-    line = line[:-1]
-    str_split = line.split('::')
-    key = str_split[0]
-    value = str_split[1].split('||')
-    all_ress[key] = value
-
-def read_request_to_response():
-  global req_to_res
-  f = open('modules/chitchat/resources/request_to_response.nomi', 'r')
-  lines = f.readlines()
-  f.close()
-  for line in lines:
-    line = line[:-1]
-    str_split = line.split('::')
-    key = str_split[0]
-    value = str_split[1].split('||')
-    req_to_res[key] = value
-
-def read_similars():
-  global all_similars
-  f = open('modules/chitchat/resources/similars.nomi', 'r')
-  lines = f.readlines()
-  f.close()
-  for line in lines:
-    line = line[:-1]
-    str_split = line.split('::')
-    key = str_split[0]
-    value = str_split[1].split('||')
-    all_similars[key] = value
+    line = line[:-1].split('::')
+    key = line[0]
+    value = line[1].split('||')
+    dic[key] = value
+  return dic
 
 def prepare():
-  read_requests()
-  read_responses()
-  read_request_to_response()
-  read_similars()
+  global all_reqs, all_ress, req_to_res, all_similars
+  all_reqs = read('requests')
+  all_ress = read('responses')
+  req_to_res = read('request_to_response')
+  all_similars = read('similars')
 
 class Logic():
   def __init__(self, req):
