@@ -1,6 +1,5 @@
 from discord.ext import commands
-import platform, discord, datetime, pytz, random, asyncio
-from modules import chitchat
+import platform, discord, datetime, pytz, asyncio
 
 class NomiHostData(commands.Cog):
   def __init__(self, bot):
