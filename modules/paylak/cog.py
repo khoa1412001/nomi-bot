@@ -22,7 +22,6 @@ class PayLak(commands.Cog):
     await self.bot.wait_until_ready()
     while not discord.opus.is_loaded():
       await asyncio.sleep(1)
-    print('opus is loaded')
     while True:
       for id in self.music_guilds:
         guild = self.music_guilds[id]
@@ -44,20 +43,6 @@ class PayLak(commands.Cog):
                 guild.current += 1
               guild.is_playing = False
       await asyncio.sleep(2)
-
-  @commands.command(aliases = ['q', 'playlist', 'list'])
-  async def queue(self, ctx):
-    guild = self.music_guilds[ctx.guild.id]
-    if len(guild.playlist) > 0:
-      index = 0
-      text = ''
-      for song in guild.playlist:
-        text += f'[{index}] {song.title} [{song.duration}]\n'
-        index += 1
-      text = '```\n' + text + '```'
-      await ctx.send(text)
-    else:
-      await ctx.send('There is no song in queue now.')
 
   @commands.command()
   async def join(self, ctx):
@@ -104,6 +89,20 @@ class PayLak(commands.Cog):
       song.cleanup()
       guild.remove_at(index)
       await ctx.send(f'Removed from queue: `{song.title}`.')
+
+  @commands.command(aliases = ['q', 'playlist', 'list'])
+  async def queue(self, ctx):
+    guild = self.music_guilds[ctx.guild.id]
+    if len(guild.playlist) > 0:
+      index = 0
+      text = ''
+      for song in guild.playlist:
+        text += f'[{index}] {song.title} [{song.duration}]\n'
+        index += 1
+      text = '```\n' + 'Queue:\n' + text + '```'
+      await ctx.send(text)
+    else:
+      await ctx.send('There is no song in queue now.')
 
   @commands.command(aliases = ['removeall'])
   async def clear(self, ctx):
