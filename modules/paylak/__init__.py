@@ -2,7 +2,7 @@ import discord, youtube_dl
 
 ytdl_format_options = {
     'format': 'bestaudio/best',
-    'outtmpl': '%(extractor)s-%(id)s-%(title)s.%(ext)s',
+    'outtmpl': '%(id)s-%(title)s.%(ext)s',
     'restrictfilenames': True,
     'noplaylist': True,
     'nocheckcertificate': True,
@@ -49,7 +49,7 @@ class MusicGuild():
     self.current = 0
     self.is_playing = False
     self.loop = False
-    self.stream = True
+    self.stream = False
     self.volume = 1.0
 
   def add(self, song):
